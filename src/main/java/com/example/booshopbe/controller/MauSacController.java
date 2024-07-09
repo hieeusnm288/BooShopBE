@@ -2,63 +2,61 @@ package com.example.booshopbe.controller;
 
 import com.example.booshopbe.apirespone.ApiRespone;
 import com.example.booshopbe.entity.KhuyenMai;
+import com.example.booshopbe.entity.MauSac;
 import com.example.booshopbe.entity.PhuongThucThanhToan;
-import com.example.booshopbe.service.PhuongThucTTService;
+import com.example.booshopbe.service.MauSacService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/api/v1/pttt")
-public class PhuongThucTTController {
+@RequestMapping("/api/v1/mausac")
+public class MauSacController {
     @Autowired
-    PhuongThucTTService service;
+    MauSacService mauSacService;
 
     @GetMapping("/all")
     public ApiRespone<List> getAll(){
         ApiRespone apiRespone = new ApiRespone();
-        apiRespone.setResult(service.getAll());
-        apiRespone.setCode(200);
-        apiRespone.setMessage("Success");
-        return apiRespone;
-    }
-    @GetMapping("/{id}")
-    public ApiRespone<PhuongThucThanhToan> getDetail(@PathVariable("id") int id){
-        ApiRespone apiRespone = new ApiRespone();
-        apiRespone.setResult(service.findById(id));
+        apiRespone.setResult(mauSacService.getAll());
         apiRespone.setCode(200);
         apiRespone.setMessage("Success");
         return apiRespone;
     }
 
     @PostMapping("/add")
-    public ApiRespone<PhuongThucThanhToan> insert(@RequestBody PhuongThucThanhToan phuongThucThanhToan){
+    public ApiRespone<MauSac> insert(@RequestBody MauSac mauSac){
         ApiRespone apiRespone = new ApiRespone();
-        apiRespone.setResult(service.insert(phuongThucThanhToan));
+        apiRespone.setResult(mauSacService.insert(mauSac));
         apiRespone.setCode(200);
         apiRespone.setMessage("Success");
         return apiRespone;
     }
-
     @PutMapping("/{id}")
-    public ApiRespone<PhuongThucThanhToan> update(@PathVariable("id") int id, @RequestBody PhuongThucThanhToan phuongThucThanhToan){
+    public ApiRespone<PhuongThucThanhToan> update(@PathVariable("id") UUID id, @RequestBody MauSac mauSac){
         ApiRespone apiRespone = new ApiRespone();
-        apiRespone.setResult(service.update(id,phuongThucThanhToan));
+        apiRespone.setResult(mauSacService.update(id,mauSac));
         apiRespone.setCode(200);
         apiRespone.setMessage("Success");
         return apiRespone;
     }
 
     @DeleteMapping("/{id}")
-    public ApiRespone<?> delete(@PathVariable("id") int id){
-        service.deleteById(id);
+    public ApiRespone<?> delete(@PathVariable("id") UUID id){
+        mauSacService.deleteById(id);
         ApiRespone apiRespone = new ApiRespone();
         apiRespone.setResult("Xoa Thanh Cong");
+        apiRespone.setCode(200);
+        apiRespone.setMessage("Success");
+        return apiRespone;
+    }
+
+    @GetMapping("/{id}")
+    public ApiRespone<MauSac> getDetail(@PathVariable("id") UUID id){
+        ApiRespone apiRespone = new ApiRespone();
+        apiRespone.setResult(mauSacService.findById(id));
         apiRespone.setCode(200);
         apiRespone.setMessage("Success");
         return apiRespone;
