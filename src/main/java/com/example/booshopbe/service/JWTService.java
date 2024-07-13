@@ -1,5 +1,7 @@
 package com.example.booshopbe.service;
 
+import com.example.booshopbe.entity.KhachHang;
+import com.example.booshopbe.entity.NhanVien;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -19,20 +21,43 @@ import java.util.function.Function;
 public class JWTService {
     public static final String SERECT = "5367566B59703373367639792F423F4528482B4D6251655468576D5A71347437";
 
-    // Tao jwt du tren username
-    public String generateToken(String username){
+    // Tao jwt du tren username NV
+    public String generateToken(NhanVien nhanVien){
         Map<String, Objects> claims = new HashMap<>();
         // claims.put("isAdmin", true);
-        return createToken(claims, username);
+        return createToken(claims, nhanVien);
     }
-
     //Taok JWT voi cac claims
-    private String createToken(Map<String, Objects> claims, String username){
+    private String createToken(Map<String, Objects> claims, NhanVien nhanVien){
         return Jwts.builder()
                 .setClaims(claims)
-                .setSubject(username)
+                .setSubject(nhanVien.getUsername())
+                .claim("role", nhanVien.getChucvu())
+                .claim("username", nhanVien.getUsername())
+                .claim("tennhanvien", nhanVien.getTennhanvien())
                 .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() +60*60*1000)) //Jwt hwt han sau 1 tieng
+                .setExpiration(new Date(System.currentTimeMillis() +600*60*1000)) //Jwt hwt han sau 1 tieng
+                .signWith(SignatureAlgorithm.HS256, getSignKey())
+                .compact();
+    }
+
+    // KH
+    public String generateTokenKH(KhachHang khachHang){
+        Map<String, Objects> claims = new HashMap<>();
+        // claims.put("isAdmin", true);
+        return createTokenKH(claims, khachHang);
+    }
+
+
+    private String createTokenKH(Map<String, Objects> claims, KhachHang khachHang){
+        return Jwts.builder()
+                .setClaims(claims)
+                .setSubject(khachHang.getUsername())
+//                .claim("role", nhanVien.getChucvu())
+                .claim("username", khachHang.getUsername())
+                .claim("tenKhachHang", khachHang.getTenkhachhang())
+                .setIssuedAt(new Date(System.currentTimeMillis()))
+                .setExpiration(new Date(System.currentTimeMillis() +600*60*1000)) //Jwt hwt han sau 1 tieng
                 .signWith(SignatureAlgorithm.HS256, getSignKey())
                 .compact();
     }

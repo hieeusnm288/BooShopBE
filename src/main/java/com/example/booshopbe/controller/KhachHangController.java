@@ -1,32 +1,35 @@
 package com.example.booshopbe.controller;
 
 import com.example.booshopbe.apirespone.ApiRespone;
+import com.example.booshopbe.entity.KhachHang;
 import com.example.booshopbe.entity.NhanVien;
 import com.example.booshopbe.security.JwtResponse;
 import com.example.booshopbe.security.LoginRequest;
 import com.example.booshopbe.service.JWTService;
-import com.example.booshopbe.service.NhanVienService;
+import com.example.booshopbe.service.KhachHangService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.web.PageableDefault;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/api/v1/nhanvien")
-public class NhanVienController {
+@RequestMapping("/api/v1/khachhang")
+public class KhachHangController {
     @Autowired
-    NhanVienService nhanVienService;
+    KhachHangService khachHangService;
 
     @Autowired
     private AuthenticationManager manager;
@@ -35,72 +38,62 @@ public class NhanVienController {
     private JWTService jwtService;
 
     @GetMapping("/all")
-    public ApiRespone<List> getListNhanVien()
+    public ApiRespone<List> getListKhachHang()
     {
         ApiRespone<List> apiRespone = new ApiRespone<>();
         apiRespone.setCode(200);
         apiRespone.setMessage("Success");
-        apiRespone.setResult(nhanVienService.getAll());
-        return apiRespone;
-    }
-
-    @PostMapping("/add")
-    public ApiRespone<NhanVien> addNhanVien(@RequestBody NhanVien nhanVien){
-        ApiRespone apiRespone = new ApiRespone();
-        apiRespone.setResult(nhanVienService.insert(nhanVien));
-        apiRespone.setCode(200);
-        apiRespone.setMessage("Success");
+        apiRespone.setResult(khachHangService.getAll());
         return apiRespone;
     }
 
     @GetMapping("/{id}")
-    public ApiRespone<NhanVien> getDetail(@PathVariable("id") UUID id){
+    public ApiRespone<KhachHang> getDetail(@PathVariable("id") UUID id){
         ApiRespone apiRespone = new ApiRespone();
-        apiRespone.setResult(nhanVienService.findById(id));
+        apiRespone.setResult(khachHangService.findById(id));
         apiRespone.setCode(200);
         apiRespone.setMessage("Success");
         return apiRespone;
     }
 
-    @GetMapping("/detail/{username}")
-    public ApiRespone<NhanVien> getDetailByUser(@PathVariable("username") String username){
+    @PostMapping("/add")
+    public ApiRespone<KhachHang> addKhachHang(@RequestBody KhachHang khachHang){
         ApiRespone apiRespone = new ApiRespone();
-        apiRespone.setResult(nhanVienService.findByUsername(username));
+        apiRespone.setResult(khachHangService.insert(khachHang));
         apiRespone.setCode(200);
         apiRespone.setMessage("Success");
         return apiRespone;
     }
 
     @PutMapping("/{id}")
-    public ApiRespone<NhanVien> updateAccount(@PathVariable("id") UUID id, @RequestBody NhanVien nhanVien){
+    public ApiRespone<KhachHang> updateKhachHang(@PathVariable("id") UUID id, @RequestBody KhachHang khachHang){
         ApiRespone apiRespone = new ApiRespone();
-        apiRespone.setResult(nhanVienService.updateNhanhVien(id, nhanVien));
+        apiRespone.setResult(khachHangService.updateKhachHang(id, khachHang));
         apiRespone.setCode(200);
         apiRespone.setMessage("Success");
         return apiRespone;
     }
 
     @DeleteMapping("/{id}")
-    public ApiRespone<NhanVien> deleteAccount(@PathVariable("id") UUID id){
+    public ApiRespone<KhachHang> deleteKhachHang(@PathVariable("id") UUID id){
         ApiRespone apiRespone = new ApiRespone();
-        nhanVienService.deleteNhanVien(id);
+        khachHangService.deleteKhachHang(id);
         apiRespone.setResult("Xóa Thành công");
         apiRespone.setCode(200);
         apiRespone.setMessage("Success");
         return apiRespone;
     }
-
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest){
         // Xac thuc nguoi dung bang username va password
-        NhanVien nhanVien = nhanVienService.findByUsername(loginRequest.getUsername());
+        KhachHang khachHang = khachHangService.findByUsername(loginRequest.getUsername());
         try {
             Authentication authentication = manager.authenticate(
                     new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword())
             );
             // Neu xac thuc thah cong tao jwt
             if (authentication.isAuthenticated()){
-                final String jwt = jwtService.generateToken(nhanVien);
+                final String jwt = jwtService.generateTokenKH(khachHang);
                 return ResponseEntity.ok().body(new JwtResponse(jwt));
             }
         }catch (AuthenticationException e){
@@ -108,5 +101,4 @@ public class NhanVienController {
         }
         return ResponseEntity.badRequest().body("Login Fail");
     }
-
 }

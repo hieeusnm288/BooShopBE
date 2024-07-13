@@ -43,12 +43,13 @@ public class SecurityConfiguration{
                 configurer -> configurer
                         .requestMatchers(HttpMethod.GET, Endpoints.PUBLIC_GET_ENDPOINS).permitAll()
                         .requestMatchers(HttpMethod.POST, Endpoints.PUBLIC_POST_ENDPOINS).permitAll()
+                        .requestMatchers(HttpMethod.PUT, Endpoints.PUBLIC_PUT_ENDPOINS).permitAll()
                         .requestMatchers(HttpMethod.GET, Endpoints.ADMIN_GET_ENDPOINS).hasAuthority("admin")
                         .requestMatchers(HttpMethod.POST, Endpoints.ADMIN_POST_ENDPOINS).hasAuthority("admin")
                         .requestMatchers(HttpMethod.PUT, Endpoints.ADMIN_PUT_ENDPOINS).hasAuthority("admin")
                         .requestMatchers(HttpMethod.DELETE, Endpoints.ADMIN_DELETE_ENDPOINS).hasAuthority("admin")
-                        .requestMatchers(HttpMethod.GET, Endpoints.GUEST_GET_ENDPOINS).hasAuthority("guest")
-                        .requestMatchers(HttpMethod.POST, Endpoints.GUEST_POST_ENDPOINS).hasAuthority("guest")
+                        .requestMatchers(HttpMethod.GET, Endpoints.USER_POST_ENDPOINS).hasAuthority("user")
+                        .requestMatchers(HttpMethod.POST, Endpoints.USER_POST_ENDPOINS).hasAuthority("user")
         );
     http.cors(cors -> {
         cors.configurationSource(request -> {
