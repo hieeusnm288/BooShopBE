@@ -1,6 +1,8 @@
 package com.example.booshopbe.service;
 
+import com.example.booshopbe.entity.KhachHang;
 import com.example.booshopbe.entity.NhanVien;
+import com.example.booshopbe.responsitory.KhachHangResponsitory;
 import com.example.booshopbe.responsitory.NhanVienResponsitory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
@@ -18,7 +20,6 @@ import java.util.Objects;
 public class UserServiceImpl implements UserService {
     @Autowired
     private NhanVienResponsitory nhanVienResponsitory;
-
 
     @Autowired
     public UserServiceImpl(NhanVienResponsitory nhanVienResponsitory) {

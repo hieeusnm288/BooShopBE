@@ -47,17 +47,25 @@ public class NhanVienService {
         return nhanVienResponsitory.save(nhanVien1);
     }
 
-    public NhanVien findById (UUID id){
-        NhanVien nhanVien = nhanVienResponsitory.findById(id).get();
-        if (nhanVien == null){
+    public NhanVien findByUsername(String username) {
+        NhanVien nhanVien = nhanVienResponsitory.findNhanVienByUsername(username);
+        if (nhanVien == null) {
             throw new RuntimeException("Khong tim thay nhan vien");
         }
         return nhanVien;
     }
 
-    public NhanVien updateNhanhVien(UUID id, NhanVien nhanVien){
+    public NhanVien findById(UUID id) {
+        NhanVien nhanVien = nhanVienResponsitory.findById(id).get();
+        if (nhanVien == null) {
+            throw new RuntimeException("Khong tim thay nhan vien");
+        }
+        return nhanVien;
+    }
+
+    public NhanVien updateNhanhVien(UUID id, NhanVien nhanVien) {
         NhanVien nhanVien1 = nhanVienResponsitory.findById(id).get();
-        if (nhanVien1 == null){
+        if (nhanVien1 == null) {
             throw new RuntimeException("Khong tim thay account");
         }
         try {
@@ -74,14 +82,14 @@ public class NhanVienService {
             nhanVien1.setTrangthai(nhanVien.getTrangthai());
             nhanVienResponsitory.save(nhanVien1);
             return nhanVien1;
-        }catch (Exception e){
+        } catch (Exception e) {
             throw new RuntimeException("Loi");
         }
     }
 
-    public void deleteNhanVien(UUID id){
+    public void deleteNhanVien(UUID id) {
         NhanVien nhanVien = nhanVienResponsitory.findById(id).get();
-        if (nhanVien == null){
+        if (nhanVien == null) {
             throw new RuntimeException("Khong tim thay account");
         }
         nhanVienResponsitory.deleteById(id);
