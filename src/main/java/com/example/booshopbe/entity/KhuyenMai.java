@@ -32,7 +32,13 @@ public class KhuyenMai {
     private Date ngaybatdau;
 
     @Column(name = "NgayKetThuc")
-        private Date ngayketthuc;
+    private Date ngayketthuc;
+
+    @Column(name = "DieuKien")
+    private int dieukien;
+
+    @Column(name = "SoLuong")
+    private int soluong;
 
     @Column(name = "TrangThai")
     private int trangthai;
