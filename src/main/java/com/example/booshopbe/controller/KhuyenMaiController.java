@@ -26,6 +26,24 @@ public class KhuyenMaiController {
         apiRespone.setMessage("Success");
         return apiRespone;
     }
+
+    @GetMapping("/find")
+    public ApiRespone<List> getByTrangThai(@RequestParam(required = true) int status){
+        if (status == 2){
+            ApiRespone apiRespone = new ApiRespone();
+            apiRespone.setResult(khuyenMaiService.getAll());
+            apiRespone.setCode(200);
+            apiRespone.setMessage("Success");
+            return apiRespone;
+        }else{
+            ApiRespone apiRespone = new ApiRespone();
+            apiRespone.setResult(khuyenMaiService.getByTrangThai(status));
+            apiRespone.setCode(200);
+            apiRespone.setMessage("Success");
+            return apiRespone;
+        }
+
+    }
     @PostMapping("/add")
     public ApiRespone<MauSac> insert(@RequestBody KhuyenMai km){
         ApiRespone apiRespone = new ApiRespone();

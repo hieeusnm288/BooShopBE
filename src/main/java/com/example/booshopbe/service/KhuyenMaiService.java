@@ -4,9 +4,11 @@ import com.example.booshopbe.entity.KhuyenMai;
 import com.example.booshopbe.entity.KichCo;
 import com.example.booshopbe.entity.NhanVien;
 import com.example.booshopbe.responsitory.KhuyenMaiResponsitory;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -17,9 +19,14 @@ public class KhuyenMaiService {
     KhuyenMaiResponsitory khuyenMaiResponsitory;
 
     public List<KhuyenMai> getAll(){
+        updateExpiredKhuyenMai();
         return khuyenMaiResponsitory.findAll();
     }
 
+    public List<KhuyenMai> getByTrangThai(int trangthai) {
+        updateExpiredKhuyenMai();
+        return khuyenMaiResponsitory.findByTrangthai(trangthai);
+    }
     public KhuyenMai insert(KhuyenMai khuyenMai){
         return khuyenMaiResponsitory.save(khuyenMai);
     }
@@ -35,6 +42,8 @@ public class KhuyenMaiService {
             entity.setNgayketthuc(khuyenMai.getNgayketthuc());
             entity.setPhamtramgiam(khuyenMai.getPhamtramgiam());
             entity.setTrangthai(khuyenMai.getTrangthai());
+            entity.setDieukien(khuyenMai.getDieukien());
+            entity.setSoluong(khuyenMai.getSoluong());
             return khuyenMaiResponsitory.save(entity);
         }catch (Exception ex){
             throw new RuntimeException("Fail");
@@ -54,6 +63,16 @@ public class KhuyenMaiService {
             throw new RuntimeException("Khong tim thay");
         }
         khuyenMaiResponsitory.delete(khuyenMai);
+    }
+
+
+    public void updateExpiredKhuyenMai() {
+        Date currentDate = new Date();
+        List<KhuyenMai> expiredKhuyenMai = khuyenMaiResponsitory.findByNgayketthucBefore(currentDate);
+        for (KhuyenMai km : expiredKhuyenMai) {
+            km.setTrangthai(0); // Giả sử 0 là trạng thái không hiệu lực
+            khuyenMaiResponsitory.save(km);
+        }
     }
 
 }
