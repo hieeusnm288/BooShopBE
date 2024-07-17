@@ -38,4 +38,25 @@ public class ChiTietSanPhamController {
         apiRespone.setMessage("Success");
         return apiRespone;
     }
+
+    @PutMapping("/{id}")
+    public ApiRespone<ChiTietSanPham> update(@PathVariable("id") UUID id, @RequestBody ChiTietSanPhamDTO chiTietSanPhamDTO){
+        ApiRespone apiRespone = new ApiRespone();
+        System.out.println(chiTietSanPhamDTO.getIdSanPham());
+        ChiTietSanPham chiTietSanPham = chiTietSanPhamService.update(id,chiTietSanPhamDTO);
+        chiTietSanPhamDTO.setIdChiTietSanPham(chiTietSanPham.getIdChiTietSanPham());
+        apiRespone.setResult(chiTietSanPham);
+        apiRespone.setCode(200);
+        apiRespone.setMessage("Success");
+        return apiRespone;
+    }
+
+    @GetMapping("/find")
+    public ApiRespone<ChiTietSanPham> getChiSanPhamBySanPhamByNT(@RequestParam(required = false) UUID idSanPham,@RequestParam(required = false) UUID idKichThuoc,@RequestParam(required = false) UUID idMauSac){
+        ApiRespone apiRespone = new ApiRespone();
+        apiRespone.setResult(chiTietSanPhamService.getCTSPbySP_KT_MS(idSanPham,idMauSac,idKichThuoc));
+        apiRespone.setCode(200);
+        apiRespone.setMessage("Success");
+        return apiRespone;
+    }
 }

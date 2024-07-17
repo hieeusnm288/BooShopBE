@@ -50,16 +50,17 @@ public class SanPhamService {
         return sanPhamRepository.save(entity);
     }
 
-    public SanPham update(UUID id,SanPham sanPham){
+    public SanPham update(UUID id,SanPhamDTO sanPhamDTO){
         SanPham entity = sanPhamRepository.findById(id).get();
         if (entity == null){
             throw new RuntimeException("Khong tim thay san pham");
         }
-        entity.setTensanpham(sanPham.getTensanpham());
-        entity.setMota(sanPham.getMota());
-        entity.setTrangthai(sanPham.getTrangthai());
-        entity.setThuonghieu(sanPham.getThuonghieu());
-        entity.setNgaytao(sanPham.getNgaytao());
+        ThuongHieu thuongHieu = thuongHieuResponsitory.findById(sanPhamDTO.getIdThuongHieu()).get();
+        entity.setTensanpham(sanPhamDTO.getTensanpham());
+        entity.setMota(sanPhamDTO.getMota());
+        entity.setTrangthai(sanPhamDTO.getTrangthai());
+        entity.setThuonghieu(thuongHieu);
+        entity.setNgaytao(entity.getNgaytao());
         return sanPhamRepository.save(entity);
     }
 
