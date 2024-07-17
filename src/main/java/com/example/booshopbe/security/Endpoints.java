@@ -13,6 +13,11 @@ public class Endpoints {
             "/api/v1/kichco/**",
             "/api/v1/khuyenmai/**",
             "/api/v1/degiay/**",
+            "/api/v1/sanpham/**",
+            "/api/v1/chitietsanpham/**",
+            "/api/v1/hinhanh/**"
+
+
     };
 
     public static final String[] PUBLIC_POST_ENDPOINS = {
@@ -49,6 +54,9 @@ public class Endpoints {
             "/api/v1/kichco/**",
             "/api/v1/khuyenmai/**",
             "/api/v1/degiay/**",
+            "/api/v1/sanpham/**",
+            "/api/v1/chitietsanpham/**",
+            "/api/v1/hinhanh/**"
 
     };
 
@@ -60,6 +68,8 @@ public class Endpoints {
             "/api/v1/kichco/**",
             "/api/v1/khuyenmai/**",
             "/api/v1/degiay/**",
+            "/api/v1/sanpham/**",
+            "/api/v1/chitietsanpham/**"
     };
 
     public static final String[] ADMIN_DELETE_ENDPOINS = {
@@ -70,7 +80,9 @@ public class Endpoints {
             "/api/v1/kichco/**",
             "/api/v1/khuyenmai/**",
             "/api/v1/degiay/**",
-            "/api/v1/khachhang/**"
+            "/api/v1/khachhang/**",
+            "/api/v1/sanpham/**",
+            "/api/v1/chitietsanpham/**"
 
 
     };
