@@ -26,6 +26,7 @@ public class ThuongHieuService {
         }
         ThuongHieu entity = new ThuongHieu();
         BeanUtils.copyProperties(thuongHieuDTO, entity);
+        entity.setTenthuonghieu(thuongHieuDTO.getTenthuonghieu());
         if (thuongHieuDTO.getLogoFile() != null) {
             String filename = fileStorageService.storeLogoFile(thuongHieuDTO.getLogoFile());
             entity.setHinhanh(filename);

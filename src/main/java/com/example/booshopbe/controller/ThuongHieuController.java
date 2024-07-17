@@ -43,6 +43,10 @@ public class ThuongHieuController {
 
     @PostMapping("/add")
     public ApiRespone<ThuongHieu> insert(@ModelAttribute ThuongHieuDTO dto){
+        System.out.println("156");
+        System.out.println("Ten "+ dto.getTenthuonghieu());
+        System.out.println("Mo Ta" + dto.getMota());
+        System.out.println("Trang Thai" + dto.getTrangthai());
         ThuongHieu entity = thuongHieuService.insert(dto);
         dto.setIdThuongHieu(entity.getIdThuongHieu());
         dto.setTenthuonghieu(entity.getTenthuonghieu());
