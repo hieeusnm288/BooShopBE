@@ -7,17 +7,15 @@ import com.example.booshopbe.entity.ThuongHieu;
 
 import java.util.UUID;
 
-public interface SanPhamProjection {
-    UUID getIdSanPham();
-    String getTensanpham();
-    int getTrangthai();
-    String getMota();
+public interface ChiTietSanPhamProjection {
     UUID getIdChiTietSanPham();
-    ThuongHieu getThuonghieu();
+    String getTrangthai();
+    String getMota();
     KichCo getKichco();
     MauSac getMausac();
     DeGiay getDegiay();
     int getSoluongton();
     double getDongia();
     String getTenhinhanh();
+
 }

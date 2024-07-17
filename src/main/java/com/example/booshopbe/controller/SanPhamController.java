@@ -40,7 +40,6 @@ public class SanPhamController {
 
     @GetMapping("/{id}")
     public ApiRespone<SanPham> getById(@PathVariable("id") UUID id){
-        System.out.println("12: "+id);
         ApiRespone apiRespone = new ApiRespone();
         apiRespone.setResult(sanPhamService.getById(id));
         apiRespone.setCode(200);
@@ -52,6 +51,17 @@ public class SanPhamController {
     public ApiRespone<SanPham> insert(@RequestBody SanPhamDTO sanPhamDTO){
         ApiRespone apiRespone = new ApiRespone();
         SanPham sanPham = sanPhamService.insert(sanPhamDTO);
+        sanPhamDTO.setIdSanPham(sanPham.getIdSanPham());
+        apiRespone.setResult(sanPhamDTO);
+        apiRespone.setCode(200);
+        apiRespone.setMessage("Success");
+        return apiRespone;
+    }
+
+    @PutMapping("/{id}")
+    public ApiRespone<SanPham> update(@PathVariable("id") UUID id, @RequestBody SanPhamDTO sanPhamDTO){
+        ApiRespone apiRespone = new ApiRespone();
+        SanPham sanPham = sanPhamService.update(id,sanPhamDTO);
         sanPhamDTO.setIdSanPham(sanPham.getIdSanPham());
         apiRespone.setResult(sanPhamDTO);
         apiRespone.setCode(200);

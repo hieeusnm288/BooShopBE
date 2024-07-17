@@ -52,4 +52,8 @@ public class KichCoService {
         kichCoRepository.delete(kichCo);
     }
 
+    public KichCo findByName(String name) {
+        return kichCoRepository.findByTenkichco(name);
+    }
+
 }

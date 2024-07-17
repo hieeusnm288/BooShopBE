@@ -54,4 +54,7 @@ public class MauSacService {
         mauSacRepository.delete(mauSac);
     }
 
+    public MauSac findByName(String name){
+        return mauSacRepository.findByTenmausac(name);
+    }
 }

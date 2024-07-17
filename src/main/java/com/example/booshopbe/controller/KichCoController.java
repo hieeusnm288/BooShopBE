@@ -61,4 +61,12 @@ public class KichCoController {
         apiRespone.setMessage("Success");
         return apiRespone;
     }
+    @GetMapping("/find")
+    public ApiRespone<MauSac> getDetailbyName(@RequestParam(required = false) String name){
+        ApiRespone apiRespone = new ApiRespone();
+        apiRespone.setResult(kichCoService.findByName(name));
+        apiRespone.setCode(200);
+        apiRespone.setMessage("Success");
+        return apiRespone;
+    }
 }
