@@ -15,21 +15,31 @@ public class Endpoints {
             "/api/v1/degiay/**",
             "/api/v1/sanpham/**",
             "/api/v1/chitietsanpham/**",
-            "/api/v1/hinhanh/**"
-
-
+            "/api/v1/hinhanh/**",
+            "api/v1/trangthaihoadon/**",
+            "api/v1/giohang/**",
+            "/api/v1/giohangchitiet/**",
+            "/api/v1/diachi/**",
+            "/api/v1/khachhang/**"
     };
 
     public static final String[] PUBLIC_POST_ENDPOINS = {
             "/api/v1/nhanvien/login",
             "/api/v1/khachhang/login",
-            "/api/v1/khachhang/**"
-
-
+            "/api/v1/khachhang/**",
+            "api/v1/trangthaihoadon/**",
+            "api/v1/giohang/**",
+            "/api/v1/giohangchitiet/**",
+            "/api/v1/diachi/**"
     };
 
     public static final String[] PUBLIC_PUT_ENDPOINS = {
-            "/api/v1/khachhang/**"
+            "/api/v1/khachhang/**",
+            "/api/v1/diachi/**"
+    };
+    public static final String[] PUBLIC_DELETE_ENDPOINS = {
+            "/api/v1/giohangchitiet/**",
+            "/api/v1/diachi/**"
     };
 
     public static final String[] ADMIN_GET_ENDPOINS = {

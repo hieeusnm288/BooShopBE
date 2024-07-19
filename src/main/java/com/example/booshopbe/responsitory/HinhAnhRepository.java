@@ -9,4 +9,6 @@ import java.util.UUID;
 public interface HinhAnhRepository extends JpaRepository<HinhAnh, UUID> {
     List<HinhAnh> findByChitietsanpham_IdChiTietSanPham(UUID idChiTietSanPham);
 
+
+
 }
