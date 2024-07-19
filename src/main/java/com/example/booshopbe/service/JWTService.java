@@ -56,6 +56,7 @@ public class JWTService {
 //                .claim("role", nhanVien.getChucvu())
                 .claim("username", khachHang.getUsername())
                 .claim("tenKhachHang", khachHang.getTenkhachhang())
+                .claim("id" , khachHang.getIdKhachHang())
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() +600*60*1000)) //Jwt hwt han sau 1 tieng
                 .signWith(SignatureAlgorithm.HS256, getSignKey())
