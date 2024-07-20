@@ -43,6 +43,9 @@ public class DiaChiService {
         return diaChiRepository.save(entity);
     }
 
+    public DiaChi getById(UUID uuid){
+        return diaChiRepository.findById(uuid).get();
+    }
     public void delete(UUID id){
         DiaChi diaChi = diaChiRepository.findById(id).get();
         if (diaChi == null){

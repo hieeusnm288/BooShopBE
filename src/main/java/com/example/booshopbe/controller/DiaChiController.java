@@ -44,6 +44,15 @@ public class DiaChiController {
         return apiRespone;
     }
 
+    @GetMapping("/{id}")
+    public ApiRespone<DiaChi> getById(@PathVariable("id") UUID id){
+        ApiRespone apiRespone = new ApiRespone();
+        apiRespone.setResult(diaChiService.getById(id));
+        apiRespone.setCode(200);
+        apiRespone.setMessage("Success");
+        return apiRespone;
+    }
+
     @DeleteMapping("/{id}")
     public ApiRespone<?> delete(@PathVariable("id") UUID id){
         ApiRespone apiRespone = new ApiRespone();

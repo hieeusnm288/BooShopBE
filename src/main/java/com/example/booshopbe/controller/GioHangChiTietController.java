@@ -47,4 +47,14 @@ public class GioHangChiTietController {
         apiRespone.setMessage("Success");
         return apiRespone;
     }
+
+    @DeleteMapping("/delete-all/{id}")
+    public ApiRespone<?> deleteAll(@PathVariable("id") UUID id){
+        gioHangChiTietService.deleteAll(id);
+        ApiRespone apiRespone = new ApiRespone();
+        apiRespone.setResult("Xoa Thanh Cong");
+        apiRespone.setCode(200);
+        apiRespone.setMessage("Success");
+        return apiRespone;
+    }
 }
