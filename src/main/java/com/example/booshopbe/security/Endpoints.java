@@ -20,7 +20,10 @@ public class Endpoints {
             "api/v1/giohang/**",
             "/api/v1/giohangchitiet/**",
             "/api/v1/diachi/**",
-            "/api/v1/khachhang/**"
+            "/api/v1/khachhang/**",
+            "/api/v1/hoadon/**",
+            "/api/v1/chitiethoadon/**"
+
     };
 
     public static final String[] PUBLIC_POST_ENDPOINS = {
@@ -30,12 +33,16 @@ public class Endpoints {
             "api/v1/trangthaihoadon/**",
             "api/v1/giohang/**",
             "/api/v1/giohangchitiet/**",
-            "/api/v1/diachi/**"
+            "/api/v1/diachi/**",
+            "/api/v1/hoadon/**",
+            "/api/v1/chitiethoadon/**"
     };
 
     public static final String[] PUBLIC_PUT_ENDPOINS = {
             "/api/v1/khachhang/**",
-            "/api/v1/diachi/**"
+            "/api/v1/diachi/**",
+            "/api/v1/hoadon/**",
+            "/api/v1/chitiethoadon/**"
     };
     public static final String[] PUBLIC_DELETE_ENDPOINS = {
             "/api/v1/giohangchitiet/**",

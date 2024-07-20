@@ -98,7 +98,7 @@
         </dependency>
         <dependency>
             <groupId>com.microsoft.sqlserver</groupId>
-            <artifactId>mssql-jdbc</artifactId>
+                <artifactId>mssql-jdbc</artifactId>
         </dependency>
     </dependencies>
 

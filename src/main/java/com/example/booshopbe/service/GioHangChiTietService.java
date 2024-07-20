@@ -60,4 +60,8 @@ public class GioHangChiTietService {
         chiTietSanPham.setIdChiTietSanPham(gioHangChiTiet.getChiTietSanPham().getIdChiTietSanPham());
         chiTietSanPhamReposotory.save(chiTietSanPham);
     }
+
+    public void deleteAll(UUID id){
+        gioHangChiTietRepository.deleteAllByGioHang_IdGioHang(id);
+    }
 }
