@@ -9,6 +9,7 @@ import com.example.booshopbe.responsitory.GioHangChiTietRepository;
 import com.example.booshopbe.responsitory.GioHangRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.UUID;
@@ -24,35 +25,32 @@ public class GioHangChiTietService {
     @Autowired
     ChiTietSanPhamReposotory chiTietSanPhamReposotory;
 
-    public List<GioHangChiTiet> getListByGioHang(UUID id){
+    public List<GioHangChiTiet> getListByGioHang(UUID id) {
         return gioHangChiTietRepository.findByGioHang_IdGioHang(id);
     }
 
     public GioHangChiTiet addSP(ChiTietGioHangDTO chiTietGioHangDTO) {
         ChiTietSanPham chiTietSanPham = chiTietSanPhamReposotory.findById(chiTietGioHangDTO.getIdChiTietSanPham()).get();
         GioHang gioHang = gioHangRepository.findById(chiTietGioHangDTO.getIdGioHang()).get();
-        GioHangChiTiet gioHangCT = gioHangChiTietRepository.findByGioHang_IdGioHangAndChiTietSanPham_idChiTietSanPham(chiTietGioHangDTO.getIdGioHang(),chiTietGioHangDTO.getIdChiTietSanPham());
-        if (gioHangCT == null){
-        GioHangChiTiet gioHangChiTiet = new GioHangChiTiet();
-        gioHangChiTiet.setGioHang(gioHang);
-        gioHangChiTiet.setChiTietSanPham(chiTietSanPham);
-        gioHangChiTiet.setSoluong(1);
-        gioHangChiTiet.setTongtien(chiTietSanPham.getDongia());
-        int soluong = chiTietSanPham.getSoluongton() - 1;
-        chiTietSanPham.setSoluongton(soluong);
-        chiTietSanPhamReposotory.save(chiTietSanPham);
-        return gioHangChiTietRepository.save(gioHangChiTiet);
-        }else{
+        GioHangChiTiet gioHangCT = gioHangChiTietRepository.findByGioHang_IdGioHangAndChiTietSanPham_idChiTietSanPham(chiTietGioHangDTO.getIdGioHang(), chiTietGioHangDTO.getIdChiTietSanPham());
+        if (gioHangCT == null) {
+            GioHangChiTiet gioHangChiTiet = new GioHangChiTiet();
+            gioHangChiTiet.setGioHang(gioHang);
+            gioHangChiTiet.setChiTietSanPham(chiTietSanPham);
+            gioHangChiTiet.setSoluong(1);
+            gioHangChiTiet.setTongtien(chiTietSanPham.getDongia());
+            return gioHangChiTietRepository.save(gioHangChiTiet);
+        } else {
             gioHangCT.setSoluong(gioHangCT.getSoluong() + 1);
             gioHangCT.setTongtien(gioHangCT.getTongtien() + chiTietSanPham.getDongia());
-            int sl =chiTietSanPham.getSoluongton() -1;
+            int sl = chiTietSanPham.getSoluongton() - 1;
             chiTietSanPham.setSoluongton(sl);
             chiTietSanPhamReposotory.save(chiTietSanPham);
             return gioHangChiTietRepository.save(gioHangCT);
         }
     }
 
-    public void deleteSP (UUID uuid) {
+    public void deleteSP(UUID uuid) {
         GioHangChiTiet gioHangChiTiet = gioHangChiTietRepository.findById(uuid).get();
         gioHangChiTietRepository.deleteById(uuid);
         ChiTietSanPham chiTietSanPham = chiTietSanPhamReposotory.findById(gioHangChiTiet.getChiTietSanPham().getIdChiTietSanPham()).get();
@@ -61,7 +59,8 @@ public class GioHangChiTietService {
         chiTietSanPhamReposotory.save(chiTietSanPham);
     }
 
-    public void deleteAll(UUID id){
-        gioHangChiTietRepository.deleteAllByGioHang_IdGioHang(id);
+    @Transactional
+    public void deleteAll(UUID id) {
+        gioHangChiTietRepository.deleteByGioHang_IdGioHang(id);
     }
 }

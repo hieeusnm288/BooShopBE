@@ -22,7 +22,9 @@ public class Endpoints {
             "/api/v1/diachi/**",
             "/api/v1/khachhang/**",
             "/api/v1/hoadon/**",
-            "/api/v1/chitiethoadon/**"
+            "/api/v1/chitiethoadon/**",
+            "/api/v1/thongke/**",
+            "/api/v1/payment/**",
 
     };
 
@@ -35,7 +37,9 @@ public class Endpoints {
             "/api/v1/giohangchitiet/**",
             "/api/v1/diachi/**",
             "/api/v1/hoadon/**",
-            "/api/v1/chitiethoadon/**"
+            "/api/v1/chitiethoadon/**",
+            "/api/v1/payment/**",
+
     };
 
     public static final String[] PUBLIC_PUT_ENDPOINS = {
