@@ -13,7 +13,8 @@ public interface GioHangChiTietRepository extends JpaRepository<GioHangChiTiet, 
     List<GioHangChiTiet> findByGioHang_IdGioHang(UUID IdGioHang);
 
     public GioHangChiTiet findByGioHang_IdGioHangAndChiTietSanPham_idChiTietSanPham(UUID IdGioHang, UUID idChiTietSanPham);
-
-    public void deleteAllByGioHang_IdGioHang(UUID id);
+//    @Query("DELETE from GioHangChiTiet where gioHang.idGioHang = ?1")
+//    public void deleteAllByGioHang_IdGioHang(UUID id);
+    void deleteByGioHang_IdGioHang(UUID gioHangId);
 
 }

@@ -6,23 +6,31 @@ import com.example.booshopbe.entity.HoaDon;
 import com.example.booshopbe.entity.SanPham;
 import com.example.booshopbe.service.HoaDonService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
+import org.springframework.data.web.config.EnableSpringDataWebSupport;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.UUID;
-
+@EnableSpringDataWebSupport(pageSerializationMode = EnableSpringDataWebSupport.PageSerializationMode.VIA_DTO)
 @RestController
 @RequestMapping("/api/v1/hoadon")
 public class HoaDonController {
     @Autowired
     HoaDonService hoaDonService;
 
-    @GetMapping("/all")
-    public ApiRespone<List> getListAll() {
-        ApiRespone<List> apiRespone = new ApiRespone<>();
+    @GetMapping("/search")
+    public ApiRespone<?> getListAll(@RequestParam(required = false) String username , @RequestParam(required = false) int idTrangThai,
+                                    @PageableDefault (size = 8, sort = "ngaytao", direction = Sort.Direction.DESC)
+                                    Pageable pageable) {
+        ApiRespone apiRespone = new ApiRespone<>();
         apiRespone.setCode(200);
         apiRespone.setMessage("Success");
-        apiRespone.setResult(hoaDonService.getAll());
+        apiRespone.setResult(hoaDonService.getAll(username,idTrangThai,pageable));
         return apiRespone;
     }
 
@@ -47,14 +55,14 @@ public class HoaDonController {
     }
 
     @PutMapping("/{id}")
-    public ApiRespone<HoaDon> update(@PathVariable("id") UUID id, @RequestBody HoaDonDTO hoaDonDTO) {
+    public ResponseEntity<?> update(@PathVariable("id") UUID id, @RequestBody HoaDonDTO hoaDonDTO) {
         ApiRespone apiRespone = new ApiRespone<>();
         HoaDon hoaDon = hoaDonService.update(id, hoaDonDTO);
         hoaDonDTO.setIdHoaDon(hoaDon.getIdHoaDon());
         apiRespone.setCode(200);
         apiRespone.setMessage("Success");
         apiRespone.setResult(hoaDonDTO);
-        return apiRespone;
+        return new ResponseEntity<>(apiRespone, HttpStatus.OK);
     }
 
 }
