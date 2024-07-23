@@ -19,7 +19,7 @@ public class GioHangChiTietController {
     GioHangChiTietService gioHangChiTietService;
 
     @PostMapping("/add")
-    public ApiRespone<GioHangChiTiet> muahang(@RequestBody ChiTietGioHangDTO chiTietGioHangDTO){
+    public ApiRespone<?> muahang(@RequestBody ChiTietGioHangDTO chiTietGioHangDTO){
         ApiRespone apiRespone = new ApiRespone();
 //        GioHangChiTiet gioHangChiTiet = ;
 //        gioHangChiTiet.setIdGioHangChiTiet(chiTietGioHangDTO.getIdGioHangChiTiet());
@@ -40,7 +40,7 @@ public class GioHangChiTietController {
     }
 
     @GetMapping("/find")
-    public ApiRespone<List> getList(@RequestParam(required = false) UUID idGioHang){
+    public ApiRespone<?> getList(@RequestParam(required = false) UUID idGioHang){
         ApiRespone apiRespone = new ApiRespone();
         apiRespone.setResult(gioHangChiTietService.getListByGioHang(idGioHang));
         apiRespone.setCode(200);
@@ -53,6 +53,15 @@ public class GioHangChiTietController {
         gioHangChiTietService.deleteAll(id);
         ApiRespone apiRespone = new ApiRespone();
         apiRespone.setResult("Xoa Thanh Cong");
+        apiRespone.setCode(200);
+        apiRespone.setMessage("Success");
+        return apiRespone;
+    }
+
+    @PutMapping("/{id}")
+    public ApiRespone<?> update(@PathVariable("id") UUID id, @RequestBody ChiTietGioHangDTO chiTietGioHangDTO){
+        ApiRespone apiRespone = new ApiRespone();
+        apiRespone.setResult(gioHangChiTietService.update(id,chiTietGioHangDTO));
         apiRespone.setCode(200);
         apiRespone.setMessage("Success");
         return apiRespone;

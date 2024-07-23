@@ -46,7 +46,8 @@ public class Endpoints {
             "/api/v1/khachhang/**",
             "/api/v1/diachi/**",
             "/api/v1/hoadon/**",
-            "/api/v1/chitiethoadon/**"
+            "/api/v1/chitiethoadon/**",
+            "/api/v1/giohangchitiet/**",
     };
     public static final String[] PUBLIC_DELETE_ENDPOINS = {
             "/api/v1/giohangchitiet/**",
