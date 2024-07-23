@@ -15,4 +15,5 @@ public class ChiTietGioHangDTO {
     private UUID IdGioHangChiTiet;
     private UUID idGioHang;
     private UUID idChiTietSanPham;
+    private int soluong;
 }
