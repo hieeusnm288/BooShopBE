@@ -57,17 +57,18 @@ public interface HoaDonRepository extends JpaRepository<HoaDon, UUID> {
     List<DoanhThuProjection> findMonthlyRevenueWithStatus();
 
 
-    @Query(value = "SELECT COUNT(*) " +
-            "FROM HoaDon hd " +
-            "WHERE YEAR(hd.ngaytao) = 2024 " +
-            "AND hd.TrangThaiHoaDon = 6", nativeQuery = true)
-    int findTongSoHoaDonHoanThanhTheoNam();
+    @Query("SELECT COUNT(h) FROM HoaDon h WHERE YEAR(h.ngaytao) = ?1 AND MONTH(h.ngaytao) = ?2")
+    int countHoaDonByMonth(int year,  int month);
 
-    @Query(value = "SELECT COUNT(*) " +
-            "FROM HoaDon hd " +
-            "WHERE YEAR(hd.ngaytao) = 2024 "
-            , nativeQuery = true)
-    int findTongSoHoaDonTheoNam();
+    @Query("SELECT COUNT(h) FROM HoaDon h WHERE YEAR(h.ngaytao) = ?1")
+    int countHoaDonByYear( int year);
+
+
+    @Query("SELECT COUNT(h) FROM HoaDon h WHERE YEAR(h.ngaytao) = ?1 AND h.trangThaiHoaDon.idTrangThaiHoaDon = 6")
+    int countCompletedHoaDonByYear( int year);
+
+    @Query("SELECT COUNT(h) FROM HoaDon h WHERE YEAR(h.ngaytao) = :year AND MONTH(h.ngaytao) = :month AND h.trangThaiHoaDon.idTrangThaiHoaDon = 6")
+    int countCompletedHoaDonByMonth(int year,int month);
 
     Page<HoaDon> findByKhachHang_UsernameContainsIgnoreCase(String username, Pageable pageable);
 
