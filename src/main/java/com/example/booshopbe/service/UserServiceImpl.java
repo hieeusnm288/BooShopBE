@@ -21,6 +21,8 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private NhanVienResponsitory nhanVienResponsitory;
 
+    @Autowired KhachHangResponsitory khachHangResponsitory;
+
     @Autowired
     public UserServiceImpl(NhanVienResponsitory nhanVienResponsitory) {
         this.nhanVienResponsitory = nhanVienResponsitory;
@@ -34,29 +36,41 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         NhanVien nhanVien = findNhanVienByUsername(username);
-        if (nhanVien == null) {
-            throw new RuntimeException("Khong ton tai nhan vien");
+        KhachHang khachHang = khachHangResponsitory.findKhachHangByUsername(username);
+        if (nhanVien == null && khachHang == null) {
+            throw new RuntimeException("Lỗi");
+        }
+        if (nhanVien != null){
+            String username1 = nhanVien.getUsername();
+            String password = nhanVien.getPassword();
+            String chucvu = "khachhang";
+            if (username1 == null || password == null) {
+                throw new RuntimeException("Khong hop le");
+            }
+            int role = nhanVien.getChucvu();
+            if (role == 0) {
+                chucvu = "Chua gan chuc vu";
+                throw new IllegalStateException("Tài khoản không có vai trò nào được gán");
+            }
+            if (role == 1){
+                chucvu = "user";
+            }
+            if (role ==2){
+                chucvu = "admin";
+            }
+
+            return new User(username, password, Collections.singletonList(new SimpleGrantedAuthority(chucvu)));
+        }else{
+            String username1 = khachHang.getUsername();
+            String password = khachHang.getPassword();
+            String chucvu = "khachhang";
+            if (username1 == null || password == null) {
+                throw new RuntimeException("Khong hop le");
+            }
+            return new User(username, password, Collections.singletonList(new SimpleGrantedAuthority(chucvu)));
         }
 
-        String username1 = nhanVien.getUsername();
-        String password = nhanVien.getPassword();
-        String chucvu = null;
-        if (username1 == null || password == null) {
-            throw new RuntimeException("Khong hop le");
-        }
-        int role = nhanVien.getChucvu();
-        if (role == 0) {
-            chucvu = "Chua gan chuc vu";
-            throw new IllegalStateException("Tài khoản không có vai trò nào được gán");
-        }
-        if (role == 1){
-            chucvu = "user";
-        }
-        if (role ==2){
-            chucvu = "admin";
-        }
-        System.out.println(chucvu);
-        return new User(username, password, Collections.singletonList(new SimpleGrantedAuthority(chucvu)));
+
     }
 //    private Collection<? extends GrantedAuthority> roleToAuthorities(Collection<NhanVien> nhanViens) {
 //
