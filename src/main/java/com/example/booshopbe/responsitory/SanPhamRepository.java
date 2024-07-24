@@ -113,6 +113,27 @@ public interface SanPhamRepository extends JpaRepository<SanPham, UUID> {
             "   FROM ChiTietSanPham cts " +
             "   WHERE cts.sanpham.idSanPham = p.idSanPham" +
             " ) AND p.tensanpham like %?1% AND p.thuonghieu.idThuongHieu = ?2 ")
-
     List<SanPhamProjection> getListByBrandAndName(String name, UUID brand);
+
+
+    @Query(value = "SELECT TOP 5 sp.tensanpham AS tensanpham, ha.tenhinhanh AS hinhanh, SUM(cthd.soluong) AS soLuongBanRa, kc.tenkichco AS kichco, ms.tenmausac AS mausac " +
+            "FROM ChiTietHoaDon cthd " +
+            "JOIN ChiTietSanPham ctsp ON cthd.chiTietSanPhamId = ctsp.idChiTietSanPham " +
+            "JOIN SanPham sp ON ctsp.sanPhamId = sp.idSanPham " +
+            "JOIN HinhAnh ha ON ctsp.idChiTietSanPham = ha.chiTietSanPhamId " +
+            "JOIN KichCo kc ON ctsp.kichCoId = kc.idKichCo " +
+            "JOIN MauSac ms ON ctsp.mauSacId = ms.idMauSac " +
+            "GROUP BY sp.tensanpham, ha.tenhinhanh, kc.tenkichco, ms.tenmausac " +
+            "ORDER BY soLuongBanRa DESC", nativeQuery = true)
+    List<Object[]> findBestSellingProducts();
+
+    @Query(value = "SELECT TOP 5 sp.tensanpham AS tensanpham, ha.tenhinhanh AS hinhanh, ctsp.soLuongTon AS soLuongTon, kc.tenkichco AS kichco, ms.tenmausac AS mausac " +
+            "FROM ChiTietSanPham ctsp " +
+            "JOIN SanPham sp ON ctsp.sanPhamId = sp.idSanPham " +
+            "JOIN HinhAnh ha ON ctsp.idChiTietSanPham = ha.chiTietSanPhamId " +
+            "JOIN KichCo kc ON ctsp.kichCoId = kc.idKichCo " +
+            "JOIN MauSac ms ON ctsp.mauSacId = ms.idMauSac " +
+            "WHERE ctsp.soLuongTon <= 10" +
+            "ORDER BY ctsp.soLuongTon ASC", nativeQuery = true)
+    List<Object[]> findNearlyOutOfStockProducts();
 }

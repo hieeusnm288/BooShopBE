@@ -4,10 +4,7 @@ import com.example.booshopbe.apirespone.ApiRespone;
 import com.example.booshopbe.dto.DoanhThuDTO;
 import com.example.booshopbe.service.ThongKeService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -26,23 +23,59 @@ public class ThongKeController {
         return apiRespone;
     }
 
-    @GetMapping("/tonghoadon")
-    public ApiRespone<?> tongHoaDon(){
+    @GetMapping("/hoadontheothang/find")
+    public ApiRespone<?> tongHoaDonByMonth(@RequestParam(required = false) int month, @RequestParam(required = false) int year){
         ApiRespone apiRespone = new ApiRespone();
-        apiRespone.setResult(thongKeService.tongHoaDon());
+        apiRespone.setResult(thongKeService.hoaDonHoanThang(month, year));
         apiRespone.setCode(200);
         apiRespone.setMessage("Success");
         return apiRespone;
     }
 
-    @GetMapping("/tonghoadon-ht")
-    public ApiRespone<?> tongHoaDonHT(){
+    @GetMapping("/hoadontheonam/{year}")
+    public ApiRespone<?> tongHoaDonByYear(@PathVariable("year") int year){
         ApiRespone apiRespone = new ApiRespone();
-        apiRespone.setResult(thongKeService.hoaDonHoanThanh());
+        apiRespone.setResult(thongKeService.tongHoaDon(year));
         apiRespone.setCode(200);
         apiRespone.setMessage("Success");
         return apiRespone;
     }
+    @GetMapping("/hoadontheonam-ht/{year}")
+    public ApiRespone<?> tongHoaDonHTByYear(@PathVariable("year") int year){
+        ApiRespone apiRespone = new ApiRespone();
+        apiRespone.setResult(thongKeService.hoaDonHTByYear(year));
+        apiRespone.setCode(200);
+        apiRespone.setMessage("Success");
+        return apiRespone;
+    }
+
+    @GetMapping("/hoadontheothang-ht/find")
+    public ApiRespone<?> tongHoaDonHTByMonth(@RequestParam(required = false) int month, @RequestParam(required = false) int year){
+        ApiRespone apiRespone = new ApiRespone();
+        apiRespone.setResult(thongKeService.hoaDonHTByMonth(year, month));
+        apiRespone.setCode(200);
+        apiRespone.setMessage("Success");
+        return apiRespone;
+    }
+
+    @GetMapping("/sanphambanchay")
+    public ApiRespone<?> sanPhamBanChay(){
+        ApiRespone apiRespone = new ApiRespone();
+        apiRespone.setResult(thongKeService.getBestSellingProducts());
+        apiRespone.setCode(200);
+        apiRespone.setMessage("Success");
+        return apiRespone;
+    }
+
+    @GetMapping("/sanphamsaphet")
+    public ApiRespone<?> sanPhamSapHet(){
+        ApiRespone apiRespone = new ApiRespone();
+        apiRespone.setResult(thongKeService.getNearlyOutOfStockProducts());
+        apiRespone.setCode(200);
+        apiRespone.setMessage("Success");
+        return apiRespone;
+    }
+
 
     @GetMapping("/tongkhachhang")
     public ApiRespone<?> tongKhachHang(){
