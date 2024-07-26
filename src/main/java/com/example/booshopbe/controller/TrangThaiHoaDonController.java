@@ -24,6 +24,18 @@ public class TrangThaiHoaDonController {
         return apiRespone;
     }
 
+    @PutMapping("/{id}")
+    public ApiRespone<TrangThaiHoaDon> update(@PathVariable("id") int id ,@RequestBody TrangThaiHoaDon trangThaiHoaDon){
+        ApiRespone apiRespone = new ApiRespone();
+        TrangThaiHoaDon entity = new TrangThaiHoaDon();
+        entity.setIdTrangThaiHoaDon(id);
+        entity.setTentrangthai(trangThaiHoaDon.getTentrangthai());
+        apiRespone.setResult(repository.save(entity));
+        apiRespone.setCode(200);
+        apiRespone.setMessage("Success");
+        return apiRespone;
+    }
+
     @GetMapping("/all")
     public ApiRespone<List> getAll(){
         ApiRespone apiRespone = new ApiRespone();
