@@ -68,9 +68,7 @@ public class ChiTietSanPhamService {
     }
 
     public ChiTietSanPham getCTSPbySP_KT_MS(UUID idSanPham, UUID idMauSac,UUID idKichThuoc){
-        System.out.println(idSanPham);
-        System.out.println(idMauSac);
-        System.out.println(idKichThuoc);
+
         return chiTietSanPhamReposotory.findBySanpham_IdSanPhamAndKichco_IdKichCoAndMausac_IdMauSac(idSanPham,idKichThuoc,idMauSac);
     }
 
