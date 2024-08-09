@@ -95,9 +95,14 @@ public class HoaDonService {
         }
         if (trangThaiHoaDon.getIdTrangThaiHoaDon() == 2){
             for (ChiTietHoaDon cthd : chiTietHoaDons){
+
                 ChiTietSanPham chiTietSanPham = chiTietSanPhamReposotory.findById(cthd.getChiTietSanPham().getIdChiTietSanPham()).get();
-                chiTietSanPham.setSoluongton(chiTietSanPham.getSoluongton() - cthd.getSoluong());
-                chiTietSanPhamReposotory.save(chiTietSanPham);
+                if (chiTietSanPham.getSoluongton() < cthd.getSoluong()){
+                    throw new RuntimeException("Số lượng không đủ");
+                }else {
+                    chiTietSanPham.setSoluongton(chiTietSanPham.getSoluongton() - cthd.getSoluong());
+                    chiTietSanPhamReposotory.save(chiTietSanPham);
+                }
             }
         }
 
