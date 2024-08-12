@@ -35,20 +35,20 @@ public class ThongKeService {
         return hoaDonRepository.countHoaDonByYear(year);
     }
 
-    public int hoaDonHoanThang(int month, int year){
-        return hoaDonRepository.countHoaDonByMonth(year , month);
+    public int hoaDonHoanThang(Date startDate, Date endDate){
+        return hoaDonRepository.countHoaDonByMonth(startDate , endDate);
     }
 
     public int hoaDonHTByYear(int year){
         return hoaDonRepository.countCompletedHoaDonByYear(year);
     }
 
-    public int hoaDonHTByMonth(int year, int month){
-        return hoaDonRepository.countCompletedHoaDonByMonth(year,month);
+    public int hoaDonHTByMonth(Date startDate, Date endDate){
+        return hoaDonRepository.countCompletedHoaDonByMonth(startDate,endDate);
     }
 
-    public List<?> getBestSellingProducts() {
-        List<Object[]> results = sanPhamRepository.findBestSellingProducts();
+    public List<?> getBestSellingProducts(int month, int year) {
+        List<Object[]> results = sanPhamRepository.findBestSellingProducts(month,year);
         return results.stream()
                 .map(result -> new SanPhamThongKe(
                         (String) result[0],

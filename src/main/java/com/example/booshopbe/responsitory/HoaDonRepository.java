@@ -10,6 +10,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -57,8 +58,8 @@ public interface HoaDonRepository extends JpaRepository<HoaDon, UUID> {
     List<DoanhThuProjection> findMonthlyRevenueWithStatus();
 
 
-    @Query("SELECT COUNT(h) FROM HoaDon h WHERE YEAR(h.ngaytao) = ?1 AND MONTH(h.ngaytao) = ?2")
-    int countHoaDonByMonth(int year,  int month);
+    @Query("SELECT COUNT(h) FROM HoaDon h WHERE h.ngaytao BETWEEN :startDate AND :endDate")
+    int countHoaDonByMonth(Date startDate,  Date endDate);
 
     @Query("SELECT COUNT(h) FROM HoaDon h WHERE YEAR(h.ngaytao) = ?1")
     int countHoaDonByYear( int year);
@@ -67,8 +68,8 @@ public interface HoaDonRepository extends JpaRepository<HoaDon, UUID> {
     @Query("SELECT COUNT(h) FROM HoaDon h WHERE YEAR(h.ngaytao) = ?1 AND h.trangThaiHoaDon.idTrangThaiHoaDon = 6")
     int countCompletedHoaDonByYear( int year);
 
-    @Query("SELECT COUNT(h) FROM HoaDon h WHERE YEAR(h.ngaytao) = :year AND MONTH(h.ngaytao) = :month AND h.trangThaiHoaDon.idTrangThaiHoaDon = 6")
-    int countCompletedHoaDonByMonth(int year,int month);
+    @Query("SELECT COUNT(h) FROM HoaDon h WHERE h.ngaytao BETWEEN :startDate AND :endDate AND h.trangThaiHoaDon.idTrangThaiHoaDon = 6")
+    int countCompletedHoaDonByMonth(Date startDate, Date endDate);
 
     Page<HoaDon> findByKhachHang_UsernameContainsIgnoreCase(String username, Pageable pageable);
 

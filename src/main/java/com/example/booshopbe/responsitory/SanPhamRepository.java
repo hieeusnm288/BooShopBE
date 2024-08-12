@@ -118,14 +118,16 @@ public interface SanPhamRepository extends JpaRepository<SanPham, UUID> {
 
     @Query(value = "SELECT TOP 5 sp.tensanpham AS tensanpham, ha.tenhinhanh AS hinhanh, SUM(cthd.soluong) AS soLuongBanRa, kc.tenkichco AS kichco, ms.tenmausac AS mausac " +
             "FROM ChiTietHoaDon cthd " +
+            "JOIN HoaDon hd ON cthd.hoaDonId = hd.idHoaDon " +
             "JOIN ChiTietSanPham ctsp ON cthd.chiTietSanPhamId = ctsp.idChiTietSanPham " +
             "JOIN SanPham sp ON ctsp.sanPhamId = sp.idSanPham " +
             "JOIN HinhAnh ha ON ctsp.idChiTietSanPham = ha.chiTietSanPhamId " +
             "JOIN KichCo kc ON ctsp.kichCoId = kc.idKichCo " +
             "JOIN MauSac ms ON ctsp.mauSacId = ms.idMauSac " +
+            "WHERE MONTH(hd.ngaytao) = :month AND YEAR(hd.ngaytao) = :year " +
             "GROUP BY sp.tensanpham, ha.tenhinhanh, kc.tenkichco, ms.tenmausac " +
             "ORDER BY soLuongBanRa DESC", nativeQuery = true)
-    List<Object[]> findBestSellingProducts();
+    List<Object[]> findBestSellingProducts(int month, int year);
 
     @Query(value = "SELECT TOP 5 sp.tensanpham AS tensanpham, ha.tenhinhanh AS hinhanh, ctsp.soLuongTon AS soLuongTon, kc.tenkichco AS kichco, ms.tenmausac AS mausac " +
             "FROM ChiTietSanPham ctsp " +
