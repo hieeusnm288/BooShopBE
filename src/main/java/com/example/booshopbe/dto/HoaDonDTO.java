@@ -16,6 +16,7 @@ public class HoaDonDTO {
     private UUID idHoaDon;
     private UUID idKhachHang;
     private String idKhuyenMai;
+    private String idNhanVien;
     private int tongtien;
     private Date ngaytao;
     private String diachi;

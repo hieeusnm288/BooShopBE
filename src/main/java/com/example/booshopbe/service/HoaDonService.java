@@ -37,6 +37,9 @@ public class HoaDonService {
     @Autowired
     ChiTietSanPhamReposotory chiTietSanPhamReposotory;
 
+    @Autowired
+    NhanVienResponsitory nhanVienResponsitory;
+
     public Page<HoaDon> getAll(String username, int idTrangThaiHoaOon, Pageable pageable) {
         if (username != null && !username.isEmpty() && idTrangThaiHoaOon == 0){
            return hoaDonRepository.findByKhachHang_UsernameContainsIgnoreCase(username,pageable);
@@ -74,6 +77,7 @@ public class HoaDonService {
         entity.setKhachHang(khachHang);
         entity.setTrangThaiHoaDon(trangThaiHoaDon);
         entity.setPhuongThucThanhToan(phuongThucThanhToan);
+        entity.setNhanVien(null);
         return hoaDonRepository.save(entity);
     }
 
@@ -84,6 +88,8 @@ public class HoaDonService {
         }
         List<ChiTietHoaDon> chiTietHoaDons = chiTietHoaDonRepository.findByHoaDon_IdHoaDon(id);
         TrangThaiHoaDon trangThaiHoaDon = trangThaiHoaDonRepository.findById(hoaDonDTO.getIdTrangThaiDonHang()).get();
+        UUID uuid = UUID.fromString(hoaDonDTO.getIdNhanVien());
+        NhanVien nhanVien = nhanVienResponsitory.findById(uuid).get();
         if (entity.getTrangThaiHoaDon().getIdTrangThaiHoaDon() > hoaDonDTO.getIdTrangThaiDonHang()){
             throw new GlobalExceoption("Không thể cập nhật lùi");
         }
@@ -105,7 +111,7 @@ public class HoaDonService {
                 }
             }
         }
-
+        entity.setNhanVien(nhanVien);
         entity.setTrangThaiHoaDon(trangThaiHoaDon);
         return hoaDonRepository.save(entity);
     }
