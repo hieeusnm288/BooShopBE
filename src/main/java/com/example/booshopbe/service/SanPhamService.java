@@ -9,6 +9,8 @@ import com.example.booshopbe.responsitory.SanPhamRepository;
 import com.example.booshopbe.responsitory.ThuongHieuResponsitory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -23,21 +25,21 @@ public class SanPhamService {
     @Autowired
     ThuongHieuResponsitory thuongHieuResponsitory;
 
-    public List<SanPhamProjection> getAll() {
-        return sanPhamRepository.getList();
+    public Page<SanPhamProjection> getAll(Pageable pageable) {
+        return sanPhamRepository.getList(pageable);
     }
 
-    public List<SanPhamProjection> getByTrangThai(String tensanpham, Integer trangthai, String id) {
+    public Page<SanPhamProjection> getByTrangThai(String tensanpham, Integer trangthai, String id, Pageable pageable) {
 
         if (tensanpham != null && !tensanpham.isEmpty()) {
-            return sanPhamRepository.getListByTen(tensanpham);
+            return sanPhamRepository.getListByTen(tensanpham, pageable);
         } else if ( id != null && !id.isEmpty()) {
             UUID uuid = UUID.fromString(id);
-            return sanPhamRepository.getListByBrand(uuid);
+            return sanPhamRepository.getListByBrand(uuid, pageable);
         } else if (trangthai == 0 || trangthai == 1) {
-            return sanPhamRepository.getListByStatus(trangthai);
+            return sanPhamRepository.getListByStatus(trangthai, pageable);
         } else {
-            return sanPhamRepository.getList();
+            return sanPhamRepository.getList(pageable);
         }
     }
 

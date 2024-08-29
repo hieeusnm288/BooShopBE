@@ -2,10 +2,10 @@ package com.example.booshopbe.responsitory;
 
 import com.example.booshopbe.dto.SanPhamProjection;
 import com.example.booshopbe.entity.SanPham;
-import com.example.booshopbe.entity.ThuongHieu;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -23,7 +23,7 @@ public interface SanPhamRepository extends JpaRepository<SanPham, UUID> {
             "   FROM ChiTietSanPham" +
             "   GROUP BY sanpham.idSanPham" +
             " )")
-    List<SanPhamProjection> getList();
+    Page<SanPhamProjection> getList(Pageable pageable);
 
     @Query("SELECT p.idSanPham as idSanPham, p.tensanpham as tensanpham, p.thuonghieu as thuonghieu , p.trangthai as trangthai, p.mota as mota," +
             "       d.idChiTietSanPham as idChiTietSanPham, d.kichco as kichco, d.mausac as mausac, d.degiay as degiay, d.soluongton as soluongton, d.dongia as dongia, i.tenhinhanh as tenhinhanh" +
@@ -48,8 +48,7 @@ public interface SanPhamRepository extends JpaRepository<SanPham, UUID> {
             "   FROM ChiTietSanPham cts " +
             "   WHERE cts.sanpham.idSanPham = p.idSanPham" +
             " ) AND p.tensanpham like %?1%  ")
-
-    List<SanPhamProjection> getListByTen(String name);
+    Page<SanPhamProjection> getListByTen(String name,Pageable pageable);
 
     @Query("SELECT p.idSanPham as idSanPham, p.tensanpham as tensanpham, p.thuonghieu as thuonghieu , p.trangthai as trangthai, p.mota as mota," +
             "       d.idChiTietSanPham as idChiTietSanPham, d.kichco as kichco, d.mausac as mausac, d.degiay as degiay, d.soluongton as soluongton, d.dongia as dongia, i.tenhinhanh as tenhinhanh" +
@@ -62,7 +61,7 @@ public interface SanPhamRepository extends JpaRepository<SanPham, UUID> {
             "   WHERE cts.sanpham.idSanPham = p.idSanPham" +
             " ) AND p.thuonghieu.idThuongHieu = ?1  ")
 
-    List<SanPhamProjection> getListByBrand(UUID idThuongHieu);
+    Page<SanPhamProjection> getListByBrand(UUID idThuongHieu, Pageable pageable);
 
     @Query("SELECT p.idSanPham as idSanPham, p.tensanpham as tensanpham, p.thuonghieu as thuonghieu , p.trangthai as trangthai, p.mota as mota," +
             "       d.idChiTietSanPham as idChiTietSanPham, d.kichco as kichco, d.mausac as mausac, d.degiay as degiay, d.soluongton as soluongton, d.dongia as dongia, i.tenhinhanh as tenhinhanh" +
@@ -75,7 +74,7 @@ public interface SanPhamRepository extends JpaRepository<SanPham, UUID> {
             "   WHERE cts.sanpham.idSanPham = p.idSanPham" +
             " ) AND p.trangthai = ?1  ")
 
-    List<SanPhamProjection> getListByStatus(int trangthai);
+    Page<SanPhamProjection> getListByStatus(int trangthai, Pageable pageable);
 
     @Query("SELECT p.idSanPham as idSanPham, p.tensanpham as tensanpham, p.thuonghieu as thuonghieu , p.trangthai as trangthai, p.mota as mota," +
             "       d.idChiTietSanPham as idChiTietSanPham, d.kichco as kichco, d.mausac as mausac, d.degiay as degiay, d.soluongton as soluongton, d.dongia as dongia, i.tenhinhanh as tenhinhanh" +

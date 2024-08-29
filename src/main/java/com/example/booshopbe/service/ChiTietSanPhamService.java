@@ -5,16 +5,20 @@ import com.example.booshopbe.dto.ChiTietSanPhamDTO;
 import com.example.booshopbe.dto.ChiTietSanPhamProjection;
 import com.example.booshopbe.entity.*;
 import com.example.booshopbe.responsitory.*;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
+import java.util.logging.Logger;
 
 @Service
+
 public class ChiTietSanPhamService {
     @Autowired
     ChiTietSanPhamReposotory chiTietSanPhamReposotory;
@@ -29,20 +33,21 @@ public class ChiTietSanPhamService {
     MauSacRepository mauSacRepository;
 
     @Autowired
-    SanPhamRepository sanPhamRepository;
+    SanPhamService sanPhamService;
 
     public List<ChiTietSanPhamProjection> getChiSanPhamBySanPhamId(UUID idSanPham){
         return chiTietSanPhamReposotory.findBySanpham_IdSanPham(idSanPham);
     }
-
     public ChiTietSanPham insert(ChiTietSanPhamDTO chiTietSanPhamDTO){
         ChiTietSanPham entity = new ChiTietSanPham();
         BeanUtils.copyProperties(chiTietSanPhamDTO, entity);
         Date date = new Date();
-        DeGiay deGiay = deGiayRepository.findById(chiTietSanPhamDTO.getIdDeGiay()).get();
+        DeGiay deGiay = deGiayRepository.findById(chiTietSanPhamDTO.getIdDeGiay())
+                .orElseThrow(() -> new GlobalExceoption("DeGiay not found"));
         KichCo kichCo = kichCoService.findById(chiTietSanPhamDTO.getIdKichCo());
-        MauSac mauSac = mauSacRepository.findById(chiTietSanPhamDTO.getIdMauSac()).get();
-        SanPham sanPham = sanPhamRepository.findById(chiTietSanPhamDTO.getIdSanPham()).get();
+        MauSac mauSac = mauSacRepository.findById(chiTietSanPhamDTO.getIdMauSac())
+                .orElseThrow(() -> new GlobalExceoption("MauSac not found"));
+        SanPham sanPham = sanPhamService.getById(chiTietSanPhamDTO.getIdSanPham());
         entity.setSanpham(sanPham);
         entity.setMausac(mauSac);
         entity.setKichco(kichCo);
@@ -69,7 +74,6 @@ public class ChiTietSanPhamService {
     }
 
     public ChiTietSanPham getCTSPbySP_KT_MS(UUID idSanPham, UUID idMauSac,UUID idKichThuoc){
-
         return chiTietSanPhamReposotory.findBySanpham_IdSanPhamAndKichco_IdKichCoAndMausac_IdMauSac(idSanPham,idKichThuoc,idMauSac);
     }
 
