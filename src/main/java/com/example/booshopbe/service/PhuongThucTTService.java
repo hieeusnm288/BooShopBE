@@ -1,5 +1,6 @@
 package com.example.booshopbe.service;
 
+import com.example.booshopbe.apirespone.GlobalExceoption;
 import com.example.booshopbe.entity.KhuyenMai;
 import com.example.booshopbe.entity.PhuongThucThanhToan;
 import com.example.booshopbe.responsitory.HinhThucThanhToanRespository;
@@ -25,26 +26,26 @@ public class PhuongThucTTService {
     public PhuongThucThanhToan update(int id, PhuongThucThanhToan phuongThucThanhToan){
         PhuongThucThanhToan pttt = respository.findById(id).get();
         if (pttt == null){
-            throw new RuntimeException("Khong tim thay");
+            throw new GlobalExceoption("Khong tim thay");
         }
         try {
             pttt.setHinhthuc(phuongThucThanhToan.getHinhthuc());
             return respository.save(pttt);
         }catch (Exception ex){
-            throw new RuntimeException("Fail");
+            throw new GlobalExceoption("Fail");
         }
     }
     public PhuongThucThanhToan findById (int id){
         PhuongThucThanhToan phuongThucThanhToan = respository.findById(id).get();
         if (phuongThucThanhToan == null){
-            throw new RuntimeException("Khong tim thay nhan vien");
+            throw new GlobalExceoption("Khong tim thay nhan vien");
         }
         return phuongThucThanhToan;
     }
     public void deleteById(int id) {
         PhuongThucThanhToan pttt = respository.findById(id).get();
         if (pttt == null){
-            throw new RuntimeException("Khong tim thay");
+            throw new GlobalExceoption("Khong tim thay");
         }
         respository.delete(pttt);
     }

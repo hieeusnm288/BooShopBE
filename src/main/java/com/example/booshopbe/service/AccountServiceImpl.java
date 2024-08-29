@@ -1,5 +1,6 @@
 package com.example.booshopbe.service;
 
+import com.example.booshopbe.apirespone.GlobalExceoption;
 import com.example.booshopbe.entity.KhachHang;
 import com.example.booshopbe.entity.NhanVien;
 import com.example.booshopbe.responsitory.KhachHangResponsitory;
@@ -33,14 +34,14 @@ public class AccountServiceImpl implements AccountService{
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         KhachHang khachHang = findKhachHangByUsername(username);
         if (khachHang == null) {
-            throw new RuntimeException("Khong ton tai nhan vien");
+            throw new GlobalExceoption("Khong ton tai nhan vien");
         }
 
         String username1 = khachHang.getUsername();
         String password = khachHang.getPassword();
         String chucvu = "khachhang";
         if (username1 == null || password == null) {
-            throw new RuntimeException("Khong hop le");
+            throw new GlobalExceoption("Khong hop le");
         }
         System.out.println(chucvu);
         return new User(username, password, Collections.singletonList(new SimpleGrantedAuthority(chucvu)));

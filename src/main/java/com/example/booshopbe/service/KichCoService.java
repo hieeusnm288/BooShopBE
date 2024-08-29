@@ -1,5 +1,6 @@
 package com.example.booshopbe.service;
 
+import com.example.booshopbe.apirespone.GlobalExceoption;
 import com.example.booshopbe.entity.KhuyenMai;
 import com.example.booshopbe.entity.KichCo;
 import com.example.booshopbe.entity.MauSac;
@@ -25,7 +26,7 @@ public class KichCoService {
     public KichCo update(UUID id, KichCo kichCo){
         KichCo entity = kichCoRepository.findById(id).get();
         if (entity == null){
-            throw new RuntimeException("Khong tim thay");
+            throw new GlobalExceoption("Khong tim thay");
         }
         try {
             entity.setTenkichco(kichCo.getTenkichco());
@@ -33,13 +34,13 @@ public class KichCoService {
             entity.setTrangthai(kichCo.getTrangthai());
             return kichCoRepository.save(entity);
         }catch (Exception ex){
-            throw new RuntimeException("Fail");
+            throw new GlobalExceoption("Fail");
         }
     }
     public KichCo findById (UUID id){
         KichCo kichCo = kichCoRepository.findById(id).get();
         if (kichCo == null){
-            throw new RuntimeException("Khong tim thay nhan vien");
+            throw new GlobalExceoption("Khong tim thay nhan vien");
         }
         return kichCo;
     }
@@ -47,7 +48,7 @@ public class KichCoService {
     public void deleteById(UUID id) {
         KichCo kichCo = kichCoRepository.findById(id).get();
         if (kichCo == null){
-            throw new RuntimeException("Khong tim thay");
+            throw new GlobalExceoption("Khong tim thay");
         }
         kichCoRepository.delete(kichCo);
     }

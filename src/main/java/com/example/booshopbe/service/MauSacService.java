@@ -1,6 +1,7 @@
 package com.example.booshopbe.service;
 
 
+import com.example.booshopbe.apirespone.GlobalExceoption;
 import com.example.booshopbe.entity.KhuyenMai;
 import com.example.booshopbe.entity.MauSac;
 import com.example.booshopbe.entity.PhuongThucThanhToan;
@@ -27,21 +28,21 @@ public class MauSacService {
     public MauSac update(UUID id, MauSac mauSac){
         MauSac entity = mauSacRepository.findById(id).get();
         if (entity == null){
-            throw new RuntimeException("Khong tim thay");
+            throw new GlobalExceoption("Khong tim thay");
         }
         try {
             entity.setTenmausac(mauSac.getTenmausac());
             entity.setTrangthai(mauSac.getTrangthai());
             return mauSacRepository.save(entity);
         }catch (Exception ex){
-            throw new RuntimeException("Fail");
+            throw new GlobalExceoption("Fail");
         }
     }
 
     public MauSac findById (UUID id){
         MauSac mauSac = mauSacRepository.findById(id).get();
         if (mauSac == null){
-            throw new RuntimeException("Khong tim thay nhan vien");
+            throw new GlobalExceoption("Khong tim thay nhan vien");
         }
         return mauSac;
     }
@@ -49,7 +50,7 @@ public class MauSacService {
     public void deleteById(UUID id) {
         MauSac mauSac = mauSacRepository.findById(id).get();
         if (mauSac == null){
-            throw new RuntimeException("Khong tim thay");
+            throw new GlobalExceoption("Khong tim thay");
         }
         mauSacRepository.delete(mauSac);
     }

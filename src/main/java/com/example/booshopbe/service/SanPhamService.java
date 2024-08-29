@@ -1,5 +1,6 @@
 package com.example.booshopbe.service;
 
+import com.example.booshopbe.apirespone.GlobalExceoption;
 import com.example.booshopbe.dto.SanPhamDTO;
 import com.example.booshopbe.dto.SanPhamProjection;
 import com.example.booshopbe.entity.SanPham;
@@ -53,7 +54,7 @@ public class SanPhamService {
     public SanPham update(UUID id,SanPhamDTO sanPhamDTO){
         SanPham entity = sanPhamRepository.findById(id).get();
         if (entity == null){
-            throw new RuntimeException("Khong tim thay san pham");
+            throw new GlobalExceoption("Khong tim thay san pham");
         }
         ThuongHieu thuongHieu = thuongHieuResponsitory.findById(sanPhamDTO.getIdThuongHieu()).get();
         entity.setTensanpham(sanPhamDTO.getTensanpham());
@@ -67,7 +68,7 @@ public class SanPhamService {
     public SanPham getById(UUID id){
         SanPham entity = sanPhamRepository.findById(id).get();
         if (entity.getIdSanPham() == null) {
-            throw new RuntimeException("Khong tim thay");
+            throw new GlobalExceoption("Khong tim thay");
         }
         return entity;
     }

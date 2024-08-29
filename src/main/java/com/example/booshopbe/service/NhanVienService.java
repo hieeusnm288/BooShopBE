@@ -1,5 +1,6 @@
 package com.example.booshopbe.service;
 
+import com.example.booshopbe.apirespone.GlobalExceoption;
 import com.example.booshopbe.entity.NhanVien;
 import com.example.booshopbe.responsitory.NhanVienResponsitory;
 import org.springframework.beans.BeanUtils;
@@ -32,13 +33,13 @@ public class NhanVienService {
         List<?> foundedListPhone = nhanVienResponsitory.findNhanVienBySodienthoaiContainsIgnoreCase(nhanVien.getSodienthoai());
         List<?> foundedListUsername = nhanVienResponsitory.findNhanVienByUsernameContainsIgnoreCase(nhanVien.getUsername());
         if (foundedListEmail.size() > 0) {
-            throw new RuntimeException("Email đã được sử dụng");
+            throw new GlobalExceoption("Email đã được sử dụng");
         }
         if (foundedListPhone.size() > 0) {
-            throw new RuntimeException("Số điện thoại đã được sử dụng");
+            throw new GlobalExceoption("Số điện thoại đã được sử dụng");
         }
         if (foundedListUsername.size() > 0) {
-            throw new RuntimeException("Username đã được sử dụng");
+            throw new GlobalExceoption("Username đã được sử dụng");
         }
         NhanVien nhanVien1 = new NhanVien();
         BeanUtils.copyProperties(nhanVien, nhanVien1);
@@ -50,7 +51,7 @@ public class NhanVienService {
     public NhanVien findByUsername(String username) {
         NhanVien nhanVien = nhanVienResponsitory.findNhanVienByUsername(username);
         if (nhanVien == null) {
-            throw new RuntimeException("Khong tim thay nhan vien");
+            throw new GlobalExceoption("Khong tim thay nhan vien");
         }
         return nhanVien;
     }
@@ -58,7 +59,7 @@ public class NhanVienService {
     public NhanVien findById(UUID id) {
         NhanVien nhanVien = nhanVienResponsitory.findById(id).get();
         if (nhanVien == null) {
-            throw new RuntimeException("Khong tim thay nhan vien");
+            throw new GlobalExceoption("Khong tim thay nhan vien");
         }
         return nhanVien;
     }
@@ -66,7 +67,7 @@ public class NhanVienService {
     public NhanVien updateNhanhVien(UUID id, NhanVien nhanVien) {
         NhanVien nhanVien1 = nhanVienResponsitory.findById(id).get();
         if (nhanVien1 == null) {
-            throw new RuntimeException("Khong tim thay account");
+            throw new GlobalExceoption("Khong tim thay account");
         }
         try {
             nhanVien1.setUsername(nhanVien1.getUsername());
@@ -83,14 +84,14 @@ public class NhanVienService {
             nhanVienResponsitory.save(nhanVien1);
             return nhanVien1;
         } catch (Exception e) {
-            throw new RuntimeException("Loi");
+            throw new GlobalExceoption("Loi");
         }
     }
 
     public void deleteNhanVien(UUID id) {
         NhanVien nhanVien = nhanVienResponsitory.findById(id).get();
         if (nhanVien == null) {
-            throw new RuntimeException("Khong tim thay account");
+            throw new GlobalExceoption("Khong tim thay account");
         }
         nhanVienResponsitory.deleteById(id);
     }

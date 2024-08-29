@@ -1,5 +1,6 @@
 package com.example.booshopbe.service;
 
+import com.example.booshopbe.apirespone.GlobalExceoption;
 import com.example.booshopbe.dto.DiaChiDTO;
 import com.example.booshopbe.entity.DiaChi;
 import com.example.booshopbe.entity.KhachHang;
@@ -34,7 +35,7 @@ public class DiaChiService {
     public DiaChi update(UUID id,DiaChiDTO dto){
         DiaChi diaChi = diaChiRepository.findById(id).get();
         if (diaChi == null){
-            throw new RuntimeException("Khong tim thay");
+            throw new GlobalExceoption("Khong tim thay");
         }
         DiaChi entity = new DiaChi();
         BeanUtils.copyProperties(dto, entity);
@@ -49,7 +50,7 @@ public class DiaChiService {
     public void delete(UUID id){
         DiaChi diaChi = diaChiRepository.findById(id).get();
         if (diaChi == null){
-            throw new RuntimeException("Khong tim thay");
+            throw new GlobalExceoption("Khong tim thay");
         }
         diaChiRepository.deleteById(id);
     }

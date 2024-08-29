@@ -1,5 +1,6 @@
 package com.example.booshopbe.service;
 
+import com.example.booshopbe.apirespone.GlobalExceoption;
 import com.example.booshopbe.entity.DeGiay;
 import com.example.booshopbe.entity.KichCo;
 import com.example.booshopbe.entity.MauSac;
@@ -25,21 +26,21 @@ public class DeGiayService {
     public DeGiay update(UUID id, DeGiay deGiay){
         DeGiay entity = deGiayRepository.findById(id).get();
         if (entity == null){
-            throw new RuntimeException("Khong tim thay");
+            throw new GlobalExceoption("Khong tim thay");
         }
         try {
             entity.setTendegiay(deGiay.getTendegiay());
             entity.setTrangthai(deGiay.getTrangthai());
             return deGiayRepository.save(entity);
         }catch (Exception ex){
-            throw new RuntimeException("Fail");
+            throw new GlobalExceoption("Fail");
         }
     }
 
     public DeGiay findById (UUID id){
         DeGiay deGiay = deGiayRepository.findById(id).get();
         if (deGiay == null){
-            throw new RuntimeException("Khong tim thay nhan vien");
+            throw new GlobalExceoption("Khong tim thay nhan vien");
         }
         return deGiay;
     }
@@ -47,7 +48,7 @@ public class DeGiayService {
     public void deleteById(UUID id) {
         DeGiay deGiay = deGiayRepository.findById(id).get();
         if (deGiay == null){
-            throw new RuntimeException("Khong tim thay");
+            throw new GlobalExceoption("Khong tim thay");
         }
         deGiayRepository.delete(deGiay);
     }
