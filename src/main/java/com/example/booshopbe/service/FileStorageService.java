@@ -1,6 +1,7 @@
 package com.example.booshopbe.service;
 
 
+import com.example.booshopbe.apirespone.GlobalExceoption;
 import com.example.booshopbe.config.FileStorageProperties;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
@@ -23,7 +24,7 @@ public class FileStorageService {
         try {
             Files.createDirectories(fileLogoStorageLocation);
         }catch (Exception ex){
-            throw new RuntimeException("Counld not create the directory where the uploaded file will be strored", ex);
+            throw new GlobalExceoption("Counld not create the directory where the uploaded file will be strored");
         }
     }
 
@@ -42,7 +43,7 @@ public class FileStorageService {
             Files.copy(file.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
             return filename;
         }catch (Exception ex){
-            throw  new RuntimeException("Could not store File " +filename+". Please try again", ex);
+            throw  new GlobalExceoption("Could not store File " +filename+". Please try again");
         }
     }
 
@@ -57,10 +58,10 @@ public class FileStorageService {
             if (resource.exists()){
                 return resource;
             }else {
-                throw new RuntimeException("File Not Found");
+                throw new GlobalExceoption("File Not Found");
             }
         }catch (Exception ex){
-            throw new RuntimeException("File Not Found",ex);
+            throw new GlobalExceoption("File Not Found");
         }
     }
 
@@ -68,11 +69,11 @@ public class FileStorageService {
         try {
             Path filePath = location.resolve(filename).normalize();
             if (!Files.exists(filePath)){
-                throw new RuntimeException("File not found");
+                throw new GlobalExceoption("File not found");
             }
             Files.delete(filePath);
         }catch (Exception ex){
-            throw new RuntimeException("File not found" , ex);
+            throw new GlobalExceoption("File not found");
         }
     }
 

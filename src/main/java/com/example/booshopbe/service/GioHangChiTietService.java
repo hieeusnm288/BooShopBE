@@ -36,10 +36,10 @@ public class GioHangChiTietService {
         GioHangChiTiet gioHangCT = gioHangChiTietRepository.findByGioHang_IdGioHangAndChiTietSanPham_idChiTietSanPham(chiTietGioHangDTO.getIdGioHang(), chiTietGioHangDTO.getIdChiTietSanPham());
         if (gioHangCT == null) {
             if (chiTietSanPham.getSoluongton() < chiTietGioHangDTO.getSoluong()){
-                throw new RuntimeException("Số lượng sản phẩm không đủ");
+                throw new GlobalExceoption("Số lượng sản phẩm không đủ");
             }
             if (chiTietGioHangDTO.getSoluong() > 10){
-                throw new RuntimeException("Số lượng không quá 10");
+                throw new GlobalExceoption("Số lượng không quá 10");
             }
             GioHangChiTiet gioHangChiTiet = new GioHangChiTiet();
             gioHangChiTiet.setGioHang(gioHang);
@@ -49,13 +49,13 @@ public class GioHangChiTietService {
             return gioHangChiTietRepository.save(gioHangChiTiet);
         } else {
             if (gioHangCT.getSoluong() + chiTietGioHangDTO.getSoluong() > 10){
-                throw new RuntimeException("Số lượng không quá 10");
+                throw new GlobalExceoption("Số lượng không quá 10");
             }
             if (chiTietSanPham.getSoluongton() < gioHangCT.getSoluong() + chiTietGioHangDTO.getSoluong()){
-                throw new RuntimeException("Số lượng sản phẩm không đủ");
+                throw new GlobalExceoption("Số lượng sản phẩm không đủ");
             }
             if (chiTietGioHangDTO.getSoluong() < 1){
-                throw new RuntimeException("Số lượng mua không thể là 0");
+                throw new GlobalExceoption("Số lượng mua không thể là 0");
             }
             gioHangCT.setSoluong(gioHangCT.getSoluong() + chiTietGioHangDTO.getSoluong());
             gioHangCT.setTongtien(gioHangCT.getTongtien() + chiTietSanPham.getDongia());
@@ -73,10 +73,10 @@ public class GioHangChiTietService {
         GioHangChiTiet gioHangChiTiet = gioHangChiTietRepository.findById(id).get();
         ChiTietSanPham chiTietSanPham = chiTietSanPhamReposotory.findById(chiTietGioHangDTO.getIdChiTietSanPham()).get();
         if (gioHangChiTiet.getSoluong() + 1 > 10 && chiTietGioHangDTO.getSoluong() > gioHangChiTiet.getSoluong()){
-            throw new RuntimeException("Số lượng không quá 10");
+            throw new GlobalExceoption("Số lượng không quá 10");
         }
         if (chiTietSanPham.getSoluongton() < gioHangChiTiet.getSoluong() + 1){
-            throw new RuntimeException("Số lượng sản phẩm không đủ");
+            throw new GlobalExceoption("Số lượng sản phẩm không đủ");
         }
         gioHangChiTiet.setSoluong(chiTietGioHangDTO.getSoluong());
         if (gioHangChiTiet.getSoluong() < chiTietGioHangDTO.getSoluong()){
@@ -87,7 +87,7 @@ public class GioHangChiTietService {
         }
         System.out.println(chiTietGioHangDTO.getSoluong());
         if (chiTietGioHangDTO.getSoluong() < 1){
-            throw new RuntimeException("Số lượng mua không thể là 0");
+            throw new GlobalExceoption("Số lượng mua không thể là 0");
         }
 
         return gioHangChiTietRepository.save(gioHangChiTiet);

@@ -1,5 +1,6 @@
 package com.example.booshopbe.service;
 
+import com.example.booshopbe.apirespone.GlobalExceoption;
 import com.example.booshopbe.entity.KhuyenMai;
 import com.example.booshopbe.entity.KichCo;
 import com.example.booshopbe.entity.NhanVien;
@@ -35,7 +36,7 @@ public class KhuyenMaiService {
     public KhuyenMai update(UUID id, KhuyenMai khuyenMai){
         KhuyenMai entity = khuyenMaiResponsitory.findById(id).get();
         if (entity == null){
-            throw new RuntimeException("Khong tim thay");
+            throw new GlobalExceoption("Khong tim thay");
         }
         try {
             entity.setMakhuyenmai(khuyenMai.getMakhuyenmai());
@@ -47,21 +48,21 @@ public class KhuyenMaiService {
             entity.setSoluong(khuyenMai.getSoluong());
             return khuyenMaiResponsitory.save(entity);
         }catch (Exception ex){
-            throw new RuntimeException("Fail");
+            throw new GlobalExceoption("Fail");
         }
     }
 
     public KhuyenMai findById (UUID id){
         KhuyenMai khuyenMai = khuyenMaiResponsitory.findById(id).get();
         if (khuyenMai == null){
-            throw new RuntimeException("Khong tim thay nhan vien");
+            throw new GlobalExceoption("Khong tim thay nhan vien");
         }
         return khuyenMai;
     }
     public void deleteById(UUID id) {
         KhuyenMai khuyenMai = khuyenMaiResponsitory.findById(id).get();
         if (khuyenMai == null){
-            throw new RuntimeException("Khong tim thay");
+            throw new GlobalExceoption("Khong tim thay");
         }
         khuyenMaiResponsitory.delete(khuyenMai);
     }

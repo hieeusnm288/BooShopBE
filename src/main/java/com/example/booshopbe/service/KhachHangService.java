@@ -1,5 +1,6 @@
 package com.example.booshopbe.service;
 
+import com.example.booshopbe.apirespone.GlobalExceoption;
 import com.example.booshopbe.entity.KhachHang;
 import com.example.booshopbe.entity.NhanVien;
 import com.example.booshopbe.responsitory.KhachHangResponsitory;
@@ -28,13 +29,13 @@ public class KhachHangService {
         List<?> foundedListPhone = khachHangResponsitory.findKhachHangBySodienthoaiContainsIgnoreCase(khachHang.getSodienthoai());
         List<?> foundedListUsername = khachHangResponsitory.findKhachHangByUsernameContainsIgnoreCase(khachHang.getUsername());
         if (foundedListEmail.size() > 0) {
-            throw new RuntimeException("Email đã được sử dụng");
+            throw new GlobalExceoption("Email đã được sử dụng");
         }
         if (foundedListPhone.size() > 0) {
-            throw new RuntimeException("Số điện thoại đã được sử dụng");
+            throw new GlobalExceoption("Số điện thoại đã được sử dụng");
         }
         if (foundedListUsername.size() > 0) {
-            throw new RuntimeException("Username đã được sử dụng");
+            throw new GlobalExceoption("Username đã được sử dụng");
         }
         KhachHang khachHang1 = new KhachHang();
         BeanUtils.copyProperties(khachHang, khachHang1);
@@ -46,7 +47,7 @@ public class KhachHangService {
     public KhachHang updateKhachHang(UUID id, KhachHang khachHang){
         KhachHang khachHang1 = khachHangResponsitory.findById(id).get();
         if (khachHang1 == null){
-            throw new RuntimeException("Khong tim thay khach hang");
+            throw new GlobalExceoption("Khong tim thay khach hang");
         }
         try {
             khachHang1.setUsername(khachHang1.getUsername());
@@ -60,14 +61,14 @@ public class KhachHangService {
             khachHangResponsitory.save(khachHang1);
             return khachHang1;
         }catch (Exception e){
-            throw new RuntimeException("Loi");
+            throw new GlobalExceoption("Loi");
         }
     }
 
     public KhachHang findById(UUID id) {
         KhachHang khachHang = khachHangResponsitory.findById(id).get();
         if (khachHang == null) {
-            throw new RuntimeException("Khong tim thay nhan vien");
+            throw new GlobalExceoption("Khong tim thay nhan vien");
         }
         return khachHang;
     }
@@ -75,7 +76,7 @@ public class KhachHangService {
     public KhachHang findByUsername(String username) {
         KhachHang khachHang = khachHangResponsitory.findKhachHangByUsername(username);
         if (khachHang == null) {
-            throw new RuntimeException("Khong tim thay nhan vien");
+            throw new GlobalExceoption("Khong tim thay nhan vien");
         }
         return khachHang;
     }
@@ -83,7 +84,7 @@ public class KhachHangService {
     public void deleteKhachHang(UUID id){
         KhachHang khachHang = khachHangResponsitory.findById(id).get();
         if (khachHang == null){
-            throw new RuntimeException("Khong tim thay khach hang");
+            throw new GlobalExceoption("Khong tim thay khach hang");
         }
         khachHangResponsitory.deleteById(id);
     }

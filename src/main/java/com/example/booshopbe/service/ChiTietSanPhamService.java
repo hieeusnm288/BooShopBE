@@ -1,5 +1,6 @@
 package com.example.booshopbe.service;
 
+import com.example.booshopbe.apirespone.GlobalExceoption;
 import com.example.booshopbe.dto.ChiTietSanPhamDTO;
 import com.example.booshopbe.dto.ChiTietSanPhamProjection;
 import com.example.booshopbe.entity.*;
@@ -54,7 +55,7 @@ public class ChiTietSanPhamService {
         System.out.println("id: "+ id);
         ChiTietSanPham entity = chiTietSanPhamReposotory.findById(id).get();
         if (entity == null){
-            throw new RuntimeException("Khong tim thay");
+            throw new GlobalExceoption("Khong tim thay");
         }
         Date date = new Date();
         BeanUtils.copyProperties(chiTietSanPhamDTO, entity);

@@ -1,5 +1,6 @@
 package com.example.booshopbe.service;
 
+import com.example.booshopbe.apirespone.GlobalExceoption;
 import com.example.booshopbe.entity.KhachHang;
 import com.example.booshopbe.entity.NhanVien;
 import com.example.booshopbe.responsitory.KhachHangResponsitory;
@@ -65,7 +66,7 @@ public class UserServiceImpl implements UserService {
             String password = khachHang.getPassword();
             String chucvu = "khachhang";
             if (username1 == null || password == null) {
-                throw new RuntimeException("Khong hop le");
+                throw new GlobalExceoption("Khong hop le");
             }
             return new User(username, password, Collections.singletonList(new SimpleGrantedAuthority(chucvu)));
         }

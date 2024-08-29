@@ -1,5 +1,6 @@
 package com.example.booshopbe.service;
 
+import com.example.booshopbe.apirespone.GlobalExceoption;
 import com.example.booshopbe.dto.ThuongHieuDTO;
 import com.example.booshopbe.entity.ThuongHieu;
 import com.example.booshopbe.responsitory.ThuongHieuResponsitory;
@@ -22,7 +23,7 @@ public class ThuongHieuService {
     public ThuongHieu insert(ThuongHieuDTO thuongHieuDTO) {
         List<?> fond = thuongHieuResponsitory.findByTenthuonghieuContainsIgnoreCase(thuongHieuDTO.getTenthuonghieu());
         if (fond.size() > 0) {
-            throw new RuntimeException("Đã tồn tại");
+            throw new GlobalExceoption("Đã tồn tại");
         }
         ThuongHieu entity = new ThuongHieu();
         BeanUtils.copyProperties(thuongHieuDTO, entity);
@@ -42,7 +43,7 @@ public class ThuongHieuService {
     public ThuongHieu findById(UUID id) {
         ThuongHieu entity = thuongHieuResponsitory.findById(id).get();
         if (entity.getIdThuongHieu() == null) {
-            throw new RuntimeException("Khong tim thay");
+            throw new GlobalExceoption("Khong tim thay");
         }
         return entity;
     }
@@ -50,7 +51,7 @@ public class ThuongHieuService {
     public void deleteThuongHieu(UUID id) {
         ThuongHieu entity = thuongHieuResponsitory.findById(id).get();
         if (entity.getIdThuongHieu() == null) {
-            throw new RuntimeException("Khong tim thay");
+            throw new GlobalExceoption("Khong tim thay");
         } else {
             thuongHieuResponsitory.deleteById(id);
         }
@@ -59,7 +60,7 @@ public class ThuongHieuService {
     public ThuongHieu update(UUID id,ThuongHieuDTO dto) {
         ThuongHieu thuongHieu = thuongHieuResponsitory.findById(id).get();
         if (thuongHieu.getIdThuongHieu() == null) {
-            throw new RuntimeException("Khong Tim Thay");
+            throw new GlobalExceoption("Khong Tim Thay");
         }
         ThuongHieu entity = new ThuongHieu();
         BeanUtils.copyProperties(dto, entity);
