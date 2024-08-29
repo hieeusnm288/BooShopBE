@@ -6,6 +6,9 @@ import com.example.booshopbe.entity.SanPham;
 import com.example.booshopbe.responsitory.ChiTietSanPhamReposotory;
 import com.example.booshopbe.service.SanPhamService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -21,18 +24,20 @@ public class SanPhamController {
     ChiTietSanPhamReposotory chiTietSanPhamReposotory;
 
     @GetMapping("/all")
-    public ApiRespone<List> getAll(){
+    public ApiRespone<List> getAll(Pageable pageable){
         ApiRespone apiRespone = new ApiRespone();
-        apiRespone.setResult(sanPhamService.getAll());
+        apiRespone.setResult(sanPhamService.getAll(pageable));
         apiRespone.setCode(200);
         apiRespone.setMessage("Success");
         return apiRespone;
     }
 
     @GetMapping("/search")
-    public ApiRespone<List> getAllByThuongHieu(@RequestParam(required = false) String name, @RequestParam(required = false) Integer trangthai, @RequestParam(required = true) String idThuongHieu){
+    public ApiRespone<List> getAllByThuongHieu(@RequestParam(required = false) String name, @RequestParam(required = false) Integer trangthai, @RequestParam(required = true) String idThuongHieu,
+                                               @PageableDefault(size = 8, direction = Sort.Direction.DESC)
+                                               Pageable pageable){
         ApiRespone apiRespone = new ApiRespone();
-        apiRespone.setResult(sanPhamService.getByTrangThai(name,trangthai,idThuongHieu));
+        apiRespone.setResult(sanPhamService.getByTrangThai(name,trangthai,idThuongHieu,pageable));
         apiRespone.setCode(200);
         apiRespone.setMessage("Success");
         return apiRespone;
