@@ -2,9 +2,8 @@ package com.example.booshopbe.security;
 
 
 public class Endpoints {
+//    public static final String front_end_host = "http://127.0.0.1:5500";
     public static final String front_end_host = "http://localhost:3000";
-
-    //    public static final String front_end_host = "https://myprojectfe.vercel.app";
     public static final String[] PUBLIC_GET_ENDPOINS = {
             "/api/v1/product/**",
             "/api/v1/thuonghieu/**",
@@ -25,6 +24,7 @@ public class Endpoints {
             "/api/v1/chitiethoadon/**",
             "/api/v1/thongke/**",
             "/api/v1/payment/**",
+            "/api/v1/send-email/**"
 
     };
 
@@ -39,6 +39,7 @@ public class Endpoints {
             "/api/v1/hoadon/**",
             "/api/v1/chitiethoadon/**",
             "/api/v1/payment/**",
+            "/api/v1/mausac/**",
 
     };
 
@@ -48,11 +49,14 @@ public class Endpoints {
             "/api/v1/hoadon/**",
             "/api/v1/chitiethoadon/**",
             "/api/v1/giohangchitiet/**",
-            "api/v1/trangthaihoadon/**"
+            "api/v1/trangthaihoadon/**",
+            "api/v1/khachhang/**",
+            "/api/v1/mausac/**",
     };
     public static final String[] PUBLIC_DELETE_ENDPOINS = {
             "/api/v1/giohangchitiet/**",
-            "/api/v1/diachi/**"
+            "/api/v1/diachi/**",
+            "/api/v1/mausac/**",
     };
 
     public static final String[] ADMIN_GET_ENDPOINS = {
@@ -73,7 +77,7 @@ public class Endpoints {
             "/api/v1/nhanvien/**",
             "/api/v1/thuonghieu/**",
             "/api/v1/pttt/**",
-            "/api/v1/mausac/**",
+//            "/api/v1/mausac/**",
             "/api/v1/kichco/**",
             "/api/v1/khuyenmai/**",
             "/api/v1/degiay/**",

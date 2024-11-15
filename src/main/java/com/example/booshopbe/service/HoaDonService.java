@@ -40,6 +40,9 @@ public class HoaDonService {
     @Autowired
     NhanVienResponsitory nhanVienResponsitory;
 
+    @Autowired
+    EmailService emailService;
+
     public Page<HoaDon> getAll(String username, int idTrangThaiHoaOon, Pageable pageable) {
         if (username != null && !username.isEmpty() && idTrangThaiHoaOon == 0){
            return hoaDonRepository.findByKhachHang_UsernameContainsIgnoreCase(username,pageable);
@@ -78,7 +81,9 @@ public class HoaDonService {
         entity.setTrangThaiHoaDon(trangThaiHoaDon);
         entity.setPhuongThucThanhToan(phuongThucThanhToan);
         entity.setNhanVien(null);
-        return hoaDonRepository.save(entity);
+        HoaDon hoaDon = hoaDonRepository.save(entity);
+        emailService.sendSimpleEmail(khachHang.getEmail(), "Thông báo đặt hàng", "Đơn hàng của bạn đã được đặt thành công");
+        return hoaDon;
     }
 
     public HoaDon update(UUID id, HoaDonDTO hoaDonDTO){
@@ -101,7 +106,6 @@ public class HoaDonService {
         }
         if (trangThaiHoaDon.getIdTrangThaiHoaDon() == 2){
             for (ChiTietHoaDon cthd : chiTietHoaDons){
-
                 ChiTietSanPham chiTietSanPham = chiTietSanPhamReposotory.findById(cthd.getChiTietSanPham().getIdChiTietSanPham()).get();
                 if (chiTietSanPham.getSoluongton() < cthd.getSoluong()){
                     throw new RuntimeException("Số lượng không đủ");
