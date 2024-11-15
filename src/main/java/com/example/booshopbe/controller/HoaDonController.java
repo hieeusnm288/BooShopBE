@@ -4,6 +4,7 @@ import com.example.booshopbe.apirespone.ApiRespone;
 import com.example.booshopbe.dto.HoaDonDTO;
 import com.example.booshopbe.entity.HoaDon;
 import com.example.booshopbe.entity.SanPham;
+import com.example.booshopbe.service.EmailService;
 import com.example.booshopbe.service.HoaDonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
@@ -22,6 +23,8 @@ import java.util.UUID;
 public class HoaDonController {
     @Autowired
     HoaDonService hoaDonService;
+    @Autowired
+    EmailService emailService;
 
     @GetMapping("/search")
     public ApiRespone<?> getListAll(@RequestParam(required = false) String username , @RequestParam(required = false) int idTrangThai,
